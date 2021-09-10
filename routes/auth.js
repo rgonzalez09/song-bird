@@ -10,7 +10,7 @@ const saltRounds = 10;
 // Require the User model in order to interact with the database
 const User = require("../models/User.model");
 
-// Require necessary (isLoggedOut and isLiggedIn) middleware in order to control access to specific routes
+// Require necessary (isLoggedOut and isLoggedIn) middleware in order to control access to specific routes
 const isLoggedOut = require("../middleware/isLoggedOut");
 const isLoggedIn = require("../middleware/isLoggedIn");
 
@@ -175,6 +175,22 @@ router.get("/logout", isLoggedIn, (req, res) => {
     }
     res.redirect("/");
   });
+});
+
+router.get("/profile", (req, res, next) => {
+  res.render("auth/profile");
+});
+
+router.get("/discover-events", (req, res, next) => {
+  res.render("auth/discover-events");
+});
+
+router.get("/event-details", (req, res, next) => {
+  res.render("auth/event-details");
+});
+
+router.get("/artist-details", (req, res, next) => {
+  res.render("auth/artist-details");
 });
 
 module.exports = router;
