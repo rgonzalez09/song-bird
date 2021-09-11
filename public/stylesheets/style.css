@@ -23,3 +23,8 @@ li {
 .error {
   background-color: red;
 }
+
+nav {
+  position: absolute;
+  top: 0.3vh;
+}
