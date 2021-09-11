@@ -20,6 +20,10 @@ li {
   margin: 0 5px;
 }
 
+.error {
+  background-color: red;
+}
+
 nav {
   position: absolute;
   top: 0.3vh;
