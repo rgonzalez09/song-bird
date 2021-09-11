@@ -19,3 +19,7 @@ li {
   height: 60px;
   margin: 0 5px;
 }
+
+.error {
+  background-color: red;
+}
