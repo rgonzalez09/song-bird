@@ -1,9 +1,9 @@
 const { Schema, model } = require("mongoose");
 
-const trackModel = new Schema(
+const trackSchema = new Schema(
     {
         name: String,
-        id: String,
+        SpotifyId: String,
         artists: [{ type: Schema.Types.ObjectId, ref: "Artist" }],
         album: Schema.Types.ObjectId, ref: "Album",
         availableMarkets: [ String ],
