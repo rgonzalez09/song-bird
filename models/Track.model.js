@@ -11,7 +11,7 @@ const trackSchema = new Schema(
         durationMS: Number,
         popularity: Number,
     }
-)
+);
 
 const Track = model("Track", trackSchema);
 

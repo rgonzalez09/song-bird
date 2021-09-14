@@ -12,7 +12,7 @@ const albumSchema = new Schema(
         availableMarkets: String,
         popularity: Number,
     }
-)
+);
 
 const Album = model("Album", albumSchema);
 

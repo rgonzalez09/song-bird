@@ -10,7 +10,7 @@ const artistSchema = new Schema(
         genres: [ String ],
         popularity: Number,
     }
-)
+);
 
 const Artist = model("Artist", artistSchema);
 
