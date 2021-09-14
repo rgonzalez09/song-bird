@@ -177,6 +177,10 @@ router.get("/search-artist", (req, res, next) => {
   res.render("auth/search-artist");
 });
 
+router.get("/search-song", (req, res, next) => {
+  res.render("auth/search-song");
+});
+
 router.get("/userlist", (req, res, next) => {
   res.render("auth/userlist");
 });
