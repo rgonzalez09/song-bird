@@ -1,5 +1,19 @@
+require("dotenv").config();
+const SpotifyWebApi = require("spotify-web-api-node");
 const router = require("express").Router();
 const axios = require("axios");
+// setting the spotify-api goes here:
+const spotifyApi = new SpotifyWebApi({
+  clientId: process.env.CLIENT_ID,
+  clientSecret: process.env.CLIENT_SECRET,
+});
+// Retrieve an access token
+spotifyApi
+  .clientCredentialsGrant()
+  .then((data) => spotifyApi.setAccessToken(data.body["access_token"]))
+  .catch((error) =>
+    console.log("Something went wrong when retrieving an access token", error)
+  );
 
 // ℹ️ Handles password encryption
 const bcrypt = require("bcryptjs");
@@ -171,10 +185,6 @@ router.get("/event-details", (req, res, next) => {
 
 router.get("/artist-details", (req, res, next) => {
   res.render("auth/artist-details");
-});
-
-router.get("/search-artist", (req, res, next) => {
-  res.render("auth/search-artist");
 });
 
 router.get("/search-song", (req, res, next) => {
