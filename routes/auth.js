@@ -183,18 +183,34 @@ router.get("/event-details", (req, res, next) => {
   res.render("auth/event-details");
 });
 
-// Search Routes
+// Search Artist Routes
 
 router.get("/search", (req, res, next) => {
-  res.render("auth/search")
+  res.render("auth/search-artist")
 })
 
 router.get("/search-artist", (req, res, next) => {
+  // console.log(req.query)
   spotifyApi
-  .searchArtists(req.query.artist)
-  .then(data => {
-    console.log(data.body.artists)
-    res.render("auth/search-artist", { data });
+  .searchTracks(req.query.search)
+  .then(trackResults=> {
+    spotifyApi.searchArtists(req.query.search)
+    .then((artistResults) => {
+      spotifyApi.searchAlbums(req.query.search, {limit: 1})
+      .then((albumResults) => {
+        // console.log({data: trackResults.body.tracks.items[0], artist: artistResults.body.artists.items})
+        console.log(albumResults.body.albums.items)
+        const data = {
+          artists: artistResults,
+          albums: albumResults,
+          tracks: trackResults
+        }
+        res.render("auth/search-artist", data);
+        
+      }).catch(err => console.log(err))
+
+      
+    }).catch(err => console.log(err))
   })
   .catch(err => console.log(err))
   // res.render("auth/search-artist")
