@@ -183,6 +183,15 @@ router.get("/event-details", (req, res, next) => {
   res.render("auth/event-details");
 });
 
+// Search Artist Routes
+router.get("/search-artist", (req, res, next) => {
+  res.render("auth/search-artist")
+})
+
+router.post("/search-artist", (req, res, next) => {
+  // const { name, spotifyId: id, imageUrl: images, albums, tracks, genres, popularity } = req.body;
+})
+
 router.get("/artist-details", (req, res, next) => {
   res.render("auth/artist-details");
 });
