@@ -13,7 +13,6 @@ a {
   text-decoration: none;
 }
 
-<<<<<<< HEAD
 ul {
   list-style: none;
   display: flex;
@@ -27,8 +26,6 @@ li {
   /* margin: 0 5px; */
 }
 
-=======
->>>>>>> b8ddec529a24c1386379fc7aa96127033b142bb7
 .error {
   background-color: red;
 }
