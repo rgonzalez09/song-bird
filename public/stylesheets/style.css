@@ -13,19 +13,6 @@ a {
   text-decoration: none;
 }
 
-ul {
-  list-style: none;
-  display: flex;
-  justify-content: flex-start;
-  justify-content: stretch;
-}
-
-li {
-  width: 5%;
-  height: 60px;
-  /* margin: 0 5px; */
-}
-
 .error {
   background-color: red;
 }
@@ -37,16 +24,15 @@ li {
   height: 50px;
   background-color: white;
   display: flex;
-  align-items: flex-start;
+  align-items: flex-end;
   margin-left: -10px;
   padding-right: 10px;
-  flex: content;
 }
 
 nav {
   width: 1920px;
   height: 40px;
-  flex: auto;
+  display: flex;
 }
 
 ul img {
@@ -59,6 +45,7 @@ ul {
   display: flex;
   flex-direction: row;
   width: 1920px;
+  margin-top: 3.5px;
 }
 
 li {
