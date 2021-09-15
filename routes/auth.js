@@ -183,9 +183,21 @@ router.get("/event-details", (req, res, next) => {
   res.render("auth/event-details");
 });
 
-// Search Artist Routes
+// Search Routes
+
+router.get("/search", (req, res, next) => {
+  res.render("auth/search")
+})
+
 router.get("/search-artist", (req, res, next) => {
-  res.render("auth/search-artist")
+  spotifyApi
+  .searchArtists(req.query.artist)
+  .then(data => {
+    console.log(data.body.artists)
+    res.render("auth/search-artist", { data });
+  })
+  .catch(err => console.log(err))
+  // res.render("auth/search-artist")
 })
 
 router.post("/search-artist", (req, res, next) => {
