@@ -191,12 +191,11 @@ router.get("/event-details", (req, res, next) => {
 });
 
 // Search Artist Routes
-
 router.get("/search", (req, res, next) => {
-  res.render("auth/search-artist")
+  res.render("auth/search")
 })
 
-router.get("/search-artist", (req, res, next) => {
+router.get("/search-results", (req, res, next) => {
   // console.log(req.query)
   spotifyApi
   .searchTracks(req.query.search, {limit: 10})
@@ -212,10 +211,10 @@ router.get("/search-artist", (req, res, next) => {
           tracks: trackResults.body.tracks.items,
         }
         
-        // console.log("ARTISTS:", data.artists)
+        console.log("ARTISTS:", data.artists)
         // console.log("TRACKS:", data.tracks)
         // console.log("ALBUMS:", data.albums)
-        res.render("auth/search-artist", data);
+        res.render("auth/search", data);
       
       }).catch(err => console.log(err))  
     }).catch(err => console.log(err))
@@ -230,30 +229,10 @@ router.get("/artist-details", (req, res, next) => {
   res.render("auth/artist-details");
 });
 
-router.get("/search-song", (req, res, next) => {
-  res.render("auth/search-song");
-});
-
 router.get("/userlist", (req, res, next) => {
   res.render("auth/userlist");
 });
 
-
-// router.get('/artist-search', (req, res) => {
-
-//   spotifyApi
-//     .searchArtists(req.query.artist)
-//     .then((data) => {
-//       console.log("The received data from the API: ", data.body.artists.items);
-//       // res.render('artist-search-results', {
-//       //   data: data.body.artists.items
-//       // })
-//     })
-
-//     .catch((err) =>
-//       console.log("The error while searching artists occurred: ", err)
-//     )
-// });
 
 
 
