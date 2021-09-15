@@ -16,7 +16,8 @@ a {
 ul {
   list-style: none;
   display: flex;
-  justify-content: flex-start;
+  flex-direction: row;
+  width: 1920px;
 }
 
 li {
@@ -32,7 +33,7 @@ li {
 .nav-container {
   position: absolute;
   top: 0vh;
-  width: 100%;
+  width: 1920px;
   height: 50px;
   background-color: white;
   display: flex;
@@ -42,7 +43,7 @@ li {
 }
 
 nav {
-  width: 100%;
+  width: 1920px;
   height: 40px;
 }
 
