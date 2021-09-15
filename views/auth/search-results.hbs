@@ -1,0 +1,26 @@
+<div id="track-results-container">
+    <h3>Tracks</h3>
+    {{#each tracksData}}
+    <h5>{{name}}</h5>
+    {{/each}}
+</div>
+<hr>
+
+<div id="artist-results-container">
+    <h3>Artists</h3>
+    {{#each artistsData}}
+    <img src="{{images.0.url}}" alt="">
+    <h5>{{name}}</h5>
+    {{/each}}
+</div>
+<hr>
+
+<div id="album-results-container">
+    <h3>Albums</h3>
+    {{#each albumsData}}
+    <img src="{{images.0.url}}" alt="">
+    <h5>{{name}}</h5>
+    {{/each}}
+</div>
+<hr>
+

@@ -69,3 +69,8 @@ li {
 #directory-li {
   margin-left: -10px;
 }
+
+#results-container {
+  height: 500px;
+  width: 1000px;
+}
