@@ -211,6 +211,7 @@ router.get("/search-artist", (req, res, next) => {
           albums: albumResults.body.albums.items,
           tracks: trackResults.body.tracks.items,
         }
+        
         // console.log("ARTISTS:", data.artists)
         // console.log("TRACKS:", data.tracks)
         // console.log("ALBUMS:", data.albums)
