@@ -13,6 +13,22 @@ a {
   text-decoration: none;
 }
 
+<<<<<<< HEAD
+ul {
+  list-style: none;
+  display: flex;
+  justify-content: flex-start;
+  justify-content: stretch;
+}
+
+li {
+  width: 5%;
+  height: 60px;
+  /* margin: 0 5px; */
+}
+
+=======
+>>>>>>> b8ddec529a24c1386379fc7aa96127033b142bb7
 .error {
   background-color: red;
 }
@@ -27,11 +43,13 @@ a {
   align-items: flex-start;
   margin-left: -10px;
   padding-right: 10px;
+  flex: content;
 }
 
 nav {
   width: 1920px;
   height: 40px;
+  flex: auto;
 }
 
 ul img {
