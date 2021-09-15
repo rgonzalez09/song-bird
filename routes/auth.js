@@ -1,7 +1,9 @@
 require("dotenv").config();
-const SpotifyWebApi = require("spotify-web-api-node");
 const router = require("express").Router();
 const axios = require("axios");
+const SpotifyWebApi = require("spotify-web-api-node");
+
+
 // setting the spotify-api goes here:
 const spotifyApi = new SpotifyWebApi({
   clientId: process.env.CLIENT_ID,
@@ -34,7 +36,10 @@ router.get("/signup", isLoggedOut, (req, res) => {
 });
 
 router.post("/signup", isLoggedOut, (req, res) => {
-  const { username, password } = req.body;
+  const {
+    username,
+    password
+  } = req.body;
 
   if (!username) {
     return res.status(400).render("auth/signup", {
@@ -95,8 +100,7 @@ router.post("/signup", isLoggedOut, (req, res) => {
         }
         if (error.code === 11000) {
           return res.status(400).render("auth/signup", {
-            errorMessage:
-              "Username need to be unique. The username you chose is already in use.",
+            errorMessage: "Username need to be unique. The username you chose is already in use.",
           });
         }
         return res.status(500).render("auth/signup", {
@@ -111,7 +115,10 @@ router.get("/login", isLoggedOut, (req, res) => {
 });
 
 router.post("/login", isLoggedOut, (req, res, next) => {
-  const { username, password } = req.body;
+  const {
+    username,
+    password
+  } = req.body;
 
   if (!username) {
     return res.status(400).render("auth/login", {
@@ -129,8 +136,8 @@ router.post("/login", isLoggedOut, (req, res, next) => {
 
   // Search the database for a user with the username submitted in the form
   User.findOne({
-    username,
-  })
+      username,
+    })
     .then((user) => {
       // If the user isn't found, send the message that user provided wrong credentials
       if (!user) {
@@ -194,5 +201,24 @@ router.get("/search-song", (req, res, next) => {
 router.get("/userlist", (req, res, next) => {
   res.render("auth/userlist");
 });
+
+
+// router.get('/artist-search', (req, res) => {
+
+//   spotifyApi
+//     .searchArtists(req.query.artist)
+//     .then((data) => {
+//       console.log("The received data from the API: ", data.body.artists.items);
+//       // res.render('artist-search-results', {
+//       //   data: data.body.artists.items
+//       // })
+//     })
+
+//     .catch((err) =>
+//       console.log("The error while searching artists occurred: ", err)
+//     )
+// });
+
+
 
 module.exports = router;
