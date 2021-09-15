@@ -11,6 +11,8 @@ const albumSchema = new Schema(
         releaseDate: String,
         availableMarkets: String,
         popularity: Number,
+        totalTracks: Number,
+        type: String,
     }
 );
 

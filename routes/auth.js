@@ -199,28 +199,26 @@ router.get("/search", (req, res, next) => {
 router.get("/search-artist", (req, res, next) => {
   // console.log(req.query)
   spotifyApi
-  .searchTracks(req.query.search)
+  .searchTracks(req.query.search, {limit: 10})
   .then(trackResults=> {
-    spotifyApi.searchArtists(req.query.search)
+    spotifyApi.searchArtists(req.query.search, {limit: 10})
     .then((artistResults) => {
-      spotifyApi.searchAlbums(req.query.search)
+      spotifyApi.searchAlbums(req.query.search, {limit: 10})
       .then((albumResults) => {
         // console.log({data: trackResults.body.tracks.items[0], artist: artistResults.body.artists.items})
         const data = {
           artists: artistResults.body.artists.items,
-          albums: albumResults,
-          tracks: trackResults
+          albums: albumResults.body.albums.items,
+          tracks: trackResults.body.tracks.items,
         }
-        console.log(data.artists)
+        // console.log("ARTISTS:", data.artists)
+        // console.log("TRACKS:", data.tracks)
+        // console.log("ALBUMS:", data.albums)
         res.render("auth/search-artist", data);
-        
-      }).catch(err => console.log(err))
-
       
+      }).catch(err => console.log(err))  
     }).catch(err => console.log(err))
-  })
-  .catch(err => console.log(err))
-  // res.render("auth/search-artist")
+  }).catch(err => console.log(err))
 })
 
 router.post("/search-artist", (req, res, next) => {

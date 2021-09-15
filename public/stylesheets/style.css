@@ -13,19 +13,6 @@ a {
   text-decoration: none;
 }
 
-ul {
-  list-style: none;
-  display: flex;
-  flex-direction: row;
-  width: 1920px;
-}
-
-li {
-  width: 5%;
-  height: 60px;
-  /* margin: 0 5px; */
-}
-
 .error {
   background-color: red;
 }
@@ -52,6 +39,19 @@ ul img {
   margin-right: 10px;
 }
 
+ul {
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+  width: 1920px;
+}
+
+li {
+  width: 5%;
+  height: 60px;
+  /* margin: 0 5px; */
+}
+
 #home-li {
   margin-right: -10px;
 }
@@ -65,5 +65,5 @@ ul img {
   margin-left: -10px;
 }
 #directory-li {
-  margin-left: -12px;
+  margin-left: -10px;
 }
