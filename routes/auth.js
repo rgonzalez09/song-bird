@@ -3,7 +3,6 @@ const router = require("express").Router();
 const axios = require("axios");
 const SpotifyWebApi = require("spotify-web-api-node");
 
-
 // setting the spotify-api goes here:
 const spotifyApi = new SpotifyWebApi({
   clientId: process.env.CLIENT_ID,
@@ -190,12 +189,12 @@ router.get("/event-details", (req, res, next) => {
   res.render("auth/event-details");
 });
 
-// Search Artist Routes
+// Search Routes
 router.get("/search", (req, res, next) => {
   res.render("auth/search")
 })
 
-router.get("/search-results", (req, res, next) => {
+router.get("/search-results", (req, res) => {
   // console.log(req.query)
   spotifyApi
   .searchTracks(req.query.search, {limit: 10})
@@ -205,16 +204,20 @@ router.get("/search-results", (req, res, next) => {
       spotifyApi.searchAlbums(req.query.search, {limit: 10})
       .then((albumResults) => {
         // console.log({data: trackResults.body.tracks.items[0], artist: artistResults.body.artists.items})
-        const data = {
-          artists: artistResults.body.artists.items,
-          albums: albumResults.body.albums.items,
-          tracks: trackResults.body.tracks.items,
-        }
+        // const data = {
+        //   artists: artistResults.body.artists.items,
+        //   albums: albumResults.body.albums.items,
+        //   tracks: trackResults.body.tracks.items,
+        // }
         
-        console.log("ARTISTS:", data.artists)
         // console.log("TRACKS:", data.tracks)
+        // console.log("ARTISTS:", data.artists)
         // console.log("ALBUMS:", data.albums)
-        res.render("auth/search", data);
+        res.render("auth/search-results", { 
+          tracksData: trackResults.body.tracks.items,
+          artistsData: artistResults.body.artists.items,
+          albumsData: albumResults.body.albums.items,
+        });
       
       }).catch(err => console.log(err))  
     }).catch(err => console.log(err))
@@ -232,8 +235,6 @@ router.get("/artist-details", (req, res, next) => {
 router.get("/userlist", (req, res, next) => {
   res.render("auth/userlist");
 });
-
-
 
 
 module.exports = router;
