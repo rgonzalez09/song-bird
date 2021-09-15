@@ -190,6 +190,42 @@ router.get("/event-details", (req, res, next) => {
   res.render("auth/event-details");
 });
 
+// Search Artist Routes
+
+router.get("/search", (req, res, next) => {
+  res.render("auth/search-artist")
+})
+
+router.get("/search-artist", (req, res, next) => {
+  // console.log(req.query)
+  spotifyApi
+  .searchTracks(req.query.search, {limit: 10})
+  .then(trackResults=> {
+    spotifyApi.searchArtists(req.query.search, {limit: 10})
+    .then((artistResults) => {
+      spotifyApi.searchAlbums(req.query.search, {limit: 10})
+      .then((albumResults) => {
+        // console.log({data: trackResults.body.tracks.items[0], artist: artistResults.body.artists.items})
+        const data = {
+          artists: artistResults.body.artists.items,
+          albums: albumResults.body.albums.items,
+          tracks: trackResults.body.tracks.items,
+        }
+        
+        // console.log("ARTISTS:", data.artists)
+        // console.log("TRACKS:", data.tracks)
+        // console.log("ALBUMS:", data.albums)
+        res.render("auth/search-artist", data);
+      
+      }).catch(err => console.log(err))  
+    }).catch(err => console.log(err))
+  }).catch(err => console.log(err))
+})
+
+router.post("/search-artist", (req, res, next) => {
+  // const { name, spotifyId: id, imageUrl: images, albums, tracks, genres, popularity } = req.body;
+})
+
 router.get("/artist-details", (req, res, next) => {
   res.render("auth/artist-details");
 });

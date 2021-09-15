@@ -13,6 +13,7 @@ a {
   text-decoration: none;
 }
 
+<<<<<<< HEAD
 ul {
   list-style: none;
   display: flex;
@@ -26,6 +27,8 @@ li {
   /* margin: 0 5px; */
 }
 
+=======
+>>>>>>> b8ddec529a24c1386379fc7aa96127033b142bb7
 .error {
   background-color: red;
 }
@@ -33,7 +36,7 @@ li {
 .nav-container {
   position: absolute;
   top: 0vh;
-  width: 100%;
+  width: 1920px;
   height: 50px;
   background-color: white;
   display: flex;
@@ -44,7 +47,7 @@ li {
 }
 
 nav {
-  width: 100%;
+  width: 1920px;
   height: 40px;
   flex: auto;
 }
@@ -52,6 +55,19 @@ nav {
 ul img {
   margin-top: -12.5px;
   margin-right: 10px;
+}
+
+ul {
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+  width: 1920px;
+}
+
+li {
+  width: 5%;
+  height: 60px;
+  /* margin: 0 5px; */
 }
 
 #home-li {
@@ -67,5 +83,5 @@ ul img {
   margin-left: -10px;
 }
 #directory-li {
-  margin-left: -12px;
+  margin-left: -10px;
 }

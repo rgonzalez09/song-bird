@@ -7,10 +7,12 @@ const albumSchema = new Schema(
         imageUrl: [{ type: String }],
         artists: [{ type: Schema.Types.ObjectId, ref: "Artist" }],
         tracks: [{ type: Schema.Types.ObjectId, ref: "Track" }],
-        genres: [String],
+        genres: [ String ],
         releaseDate: String,
         availableMarkets: String,
         popularity: Number,
+        totalTracks: Number,
+        type: String,
     }
 );
 
