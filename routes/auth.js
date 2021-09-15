@@ -203,15 +203,15 @@ router.get("/search-artist", (req, res, next) => {
   .then(trackResults=> {
     spotifyApi.searchArtists(req.query.search)
     .then((artistResults) => {
-      spotifyApi.searchAlbums(req.query.search, {limit: 1})
+      spotifyApi.searchAlbums(req.query.search)
       .then((albumResults) => {
         // console.log({data: trackResults.body.tracks.items[0], artist: artistResults.body.artists.items})
-        console.log(albumResults.body.albums.items)
         const data = {
-          artists: artistResults,
+          artists: artistResults.body.artists.items,
           albums: albumResults,
           tracks: trackResults
         }
+        console.log(data.artists)
         res.render("auth/search-artist", data);
         
       }).catch(err => console.log(err))
