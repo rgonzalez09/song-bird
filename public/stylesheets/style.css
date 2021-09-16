@@ -69,7 +69,12 @@ li {
   margin-left: -10px;
 }
 
-#results-container {
-  height: 500px;
-  width: 1000px;
+.results-container img {
+  height: 300px;
+  width: auto;
+}
+
+#results {
+  display: flex;
+  justify-content: space-around;
 }

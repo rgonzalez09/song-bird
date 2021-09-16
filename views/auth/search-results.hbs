@@ -1,26 +1,37 @@
-<div id="track-results-container">
-    <h2>Tracks</h2>
-    {{#each tracksData}}
-    <h5>{{name}}</h5>
-    {{/each}}
-</div>
-<hr>
+<h2>
+<a href="/auth/search">New Search</a>
+</h2>
 
-<div id="artist-results-container">
-    <h2>Artists</h2>
-    {{#each artistsData}}
-    <img src="{{images.0.url}}" alt="">
-    <h5>{{name}}</h5>
-    {{/each}}
-</div>
-<hr>
+<section id="results">
+    <div id="track-results-container" class ="results-container">
+        <h5>Tracks</h5>
+        {{#each tracksData}}
+        <img src="{{album.images.0.url}}" alt="">
+        <p>{{name}}</p>
+        <hr>
+        {{/each}}
+    </div>
+    <br>
+    <br>
 
-<div id="album-results-container">
-    <h2>Albums</h2>
-    {{#each albumsData}}
-    <img src="{{images.0.url}}" alt="">
-    <h5>{{name}}</h5>
-    {{/each}}
-</div>
-<hr>
+    <div id="artist-results-container" class ="results-container">
+        <h5>Artists</h5>
+        {{#each artistsData}}
+        <img src="{{images.0.url}}" alt="">
+        <p>{{name}}</p>
+        <hr>
+        {{/each}}
+    </div>
+    <br>
+    <br>
 
+    <div id="album-results-container" class ="results-container">
+        <h5>Albums</h5>
+        {{#each albumsData}}
+        <img src="{{images.0.url}}" alt="">
+        <p>{{name}}</p>
+        <hr>
+        {{/each}}
+    </div>
+    <br>
+</section>
