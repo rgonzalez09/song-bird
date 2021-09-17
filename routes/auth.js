@@ -226,33 +226,44 @@ router.get("/search-results", (req, res) => {
 
   // const { name, spotifyId: id, imageUrl: images, albums, tracks, genres, popularity } = req.body;
 
-router.get("/search-results/:id", (req, res) => {
+// router.get("/search-results/:id", (req, res) => {
+//   // console.log(req.params.id);
+//     spotifyApi
+//     .getTrack(req.params.id)
+//     .then((trackDetails) => {
+//       console.log(trackDetails.body)
+//       res.render("auth/search-results-details", { tracksData: trackDetails.body })
+//     }).catch(err => console.log(err))
+  
+//   if (req.params?.id) {
+//     spotifyApi
+//     .getArtist(req.params.id)
+//     .then((artistDetails) => {
+//       console.log(artistDetails.body)
+//       res.render("auth/search-results-details", { artistsData: artistDetails })
+//     }).catch(err => console.log(err))
+//   }
+//   if (req.params?.id) {
+//     spotifyApi
+//     .getAlbum(req.params.id)
+//     .then((albumDetails) => {
+//       console.log(albumDetails.body)
+//       res.render("auth/search-results-details", { albumsData: albumDetails })
+//     }).catch(err => console.log(err))
+//   }
+// })
+
+router.get("/search-results/:id/:searchType", (req, res) => {
   // console.log(req.params.id);
-  if (req.params?.id) {
-    spotifyApi
-    .getTrack(req.params.id)
+  const search = req.params.searchType === 'tracks' ? spotifyApi.getTrack(req.params.id) : req.params.searchType === 'albums' ? spotifyApi.getAlbum(req.params.id) : spotifyApi.getArtist(req.params.id);
+  
+    search
     .then((trackDetails) => {
       console.log(trackDetails.body)
-      res.render("auth/search-results-details", { tracksData: trackDetails })
+      res.render("auth/search-results-details", { tracksData: trackDetails.body })
     }).catch(err => console.log(err))
   }
-  if (req.params?.id) {
-    spotifyApi
-    .getArtist(req.params.id)
-    .then((artistDetails) => {
-      console.log(artistDetails.body)
-      res.render("auth/search-results-details", { artistsData: artistDetails })
-    }).catch(err => console.log(err))
-  }
-  if (req.params?.id) {
-    spotifyApi
-    .getAlbum(req.params.id)
-    .then((albumDetails) => {
-      console.log(albumDetails.body)
-      res.render("auth/search-results-details", { albumsData: albumDetails })
-    }).catch(err => console.log(err))
-  }
-})
+)
 
 router.get("/userlist", (req, res, next) => {
   res.render("auth/userlist");
