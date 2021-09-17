@@ -228,12 +228,30 @@ router.get("/search-results", (req, res) => {
 
 router.get("/search-results/:id", (req, res) => {
   // console.log(req.params.id);
-  spotifyApi
-  .getTrack(req.params.id)
-  .then((trackDetails) => {
-    console.log(trackDetails.body)
-    res.render("auth/search-results-details", { tracksData: trackDetails })
-  })
+  if (req.params?.id) {
+    spotifyApi
+    .getTrack(req.params.id)
+    .then((trackDetails) => {
+      console.log(trackDetails.body)
+      res.render("auth/search-results-details", { tracksData: trackDetails })
+    }).catch(err => console.log(err))
+  }
+  if (req.params?.id) {
+    spotifyApi
+    .getArtist(req.params.id)
+    .then((artistDetails) => {
+      console.log(artistDetails.body)
+      res.render("auth/search-results-details", { artistsData: artistDetails })
+    }).catch(err => console.log(err))
+  }
+  if (req.params?.id) {
+    spotifyApi
+    .getAlbum(req.params.id)
+    .then((albumDetails) => {
+      console.log(albumDetails.body)
+      res.render("auth/search-results-details", { albumsData: albumDetails })
+    }).catch(err => console.log(err))
+  }
 })
 
 router.get("/userlist", (req, res, next) => {
