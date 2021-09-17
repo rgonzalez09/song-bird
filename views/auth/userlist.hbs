@@ -3,5 +3,7 @@
 <h1>List Of Users</h1>
 
 {{#each users}}
-<a href="/auth/profile/{_id}"><p>Name: {{username}}</p></a>
+<p>
+<a href="/auth/profile/{_id}"><p>{{firstName}}, {{lastName}}</p></a>
+</p>
 {{/each}}
