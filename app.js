@@ -12,7 +12,7 @@ const express = require("express");
 // Handles the handlebars
 // https://www.npmjs.com/package/hbs
 const hbs = require("hbs");
-
+hbs.registerPartials(`${__dirname}/views/auth/partials`);
 // require spotify-web-api-node package here:
 const SpotifyWebApi = require("spotify-web-api-node");
 
