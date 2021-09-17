@@ -210,7 +210,7 @@ router.get("/search-results", (req, res) => {
         //   tracks: trackResults.body.tracks.items,
         // }
         
-        // console.log("TRACKS:", trackResults.body.tracks.items)
+        console.log("TRACKS:", trackResults.body.tracks.items)
         // console.log("ARTISTS:", artistResults.body.artists.items)
         // console.log("ALBUMS:", albumResults.body.albums.items)
         res.render("auth/search-results", { 
@@ -224,13 +224,17 @@ router.get("/search-results", (req, res) => {
   }).catch(err => console.log(err))
 })
 
-router.post("/search-artist", (req, res, next) => {
   // const { name, spotifyId: id, imageUrl: images, albums, tracks, genres, popularity } = req.body;
-})
 
-router.get("/artist-details", (req, res, next) => {
-  res.render("auth/artist-details");
-});
+router.get("/search-results/:id", (req, res) => {
+  // console.log(req.params.id);
+  spotifyApi
+  .getTrack(req.params.id)
+  .then((trackDetails) => {
+    console.log(trackDetails.body)
+    res.render("auth/search-results-details", { tracksData: trackDetails })
+  })
+})
 
 router.get("/userlist", (req, res, next) => {
   res.render("auth/userlist");
