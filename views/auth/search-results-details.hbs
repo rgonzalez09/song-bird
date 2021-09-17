@@ -1,28 +1,29 @@
-    {{#if tracksData}}
+    {{#if trackResults}}
     {{!-- {{#each tracksData}} --}}
         <div id="track-details">
-            <img src="{{tracksData.album.images.0.url}}">
-            <h4>{{tracksData.name}}</h4>
-            <h5>Album:{{tracksData.album.name}}</h5>
+            <img src="{{results.album.images.0.url}}">
+            <h4>{{results.name}}</h4>
+            <h5>Album:{{results.album.name}}</h5>
         </div>
     {{!-- {{/each}} --}}
     {{/if}}
 
-    {{!-- {{#if artistsData}}
-    {{#each artistsData}}
+    {{#if artistResults}}
+    {{!-- {{#each artistsData}} --}}
         <div id="artist-details">
-            <img src="{{album.images.0.url}}">
-            <h4>{{name}}</h4>
-            <h5>{{album.name}}</h5>
+            <img src="{{results.images.0.url}}">
+            <h4>{{results.name}}</h4>
+            
         </div>
-    {{/each}}
+    {{!-- {{/each}} --}}
     {{/if}}
 
-    {{#if albumsData}}
-    {{#each albumsData}}
+    {{#if albumResults}}
+    {{!-- {{#each albumsData}} --}}
         <div id="album-details">
-            <img src="{{images.0.url}}">
-            <h4>{{name}}</h4>
+            <img src="{{results.images.0.url}}">
+            <h4>{{results.name}}</h4>
         </div>
-    {{/each}}
-    {{/if}} --}}
+    {{!-- {{/each}} --}}
+    {{/if}}
+

@@ -258,9 +258,26 @@ router.get("/search-results/:id/:searchType", (req, res) => {
   const search = req.params.searchType === 'tracks' ? spotifyApi.getTrack(req.params.id) : req.params.searchType === 'albums' ? spotifyApi.getAlbum(req.params.id) : spotifyApi.getArtist(req.params.id);
   
     search
-    .then((trackDetails) => {
-      console.log(trackDetails.body)
-      res.render("auth/search-results-details", { tracksData: trackDetails.body })
+    .then((results) => {
+      // console.log(trackDetails.body)
+      // search
+      // .then((artistDetails) => {
+      //   // console.log(artistDetails.body)
+      //   search
+      //   .then((albumDetails) => {
+          // console.log(results.body)
+
+          const data = {
+            results: results.body,
+            trackResults: req.params.searchType === 'tracks',
+            albumResults: req.params.searchType === 'albums',
+            artistResults: req.params.searchType === 'artists',
+          }
+
+          console.log({data})
+          res.render("auth/search-results-details", data)
+      //   }).catch(err => console.log(err))
+      // }).catch(err => console.log(err))
     }).catch(err => console.log(err))
   }
 )
