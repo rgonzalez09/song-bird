@@ -35,10 +35,7 @@ router.get("/signup", isLoggedOut, (req, res) => {
 });
 
 router.post("/signup", isLoggedOut, (req, res) => {
-  const {
-    username,
-    password
-  } = req.body;
+  const { username, password } = req.body;
 
   if (!username) {
     return res.status(400).render("auth/signup", {
@@ -99,7 +96,8 @@ router.post("/signup", isLoggedOut, (req, res) => {
         }
         if (error.code === 11000) {
           return res.status(400).render("auth/signup", {
-            errorMessage: "Username need to be unique. The username you chose is already in use.",
+            errorMessage:
+              "Username need to be unique. The username you chose is already in use.",
           });
         }
         return res.status(500).render("auth/signup", {
@@ -114,10 +112,7 @@ router.get("/login", isLoggedOut, (req, res) => {
 });
 
 router.post("/login", isLoggedOut, (req, res, next) => {
-  const {
-    username,
-    password
-  } = req.body;
+  const { username, password } = req.body;
 
   if (!username) {
     return res.status(400).render("auth/login", {
@@ -135,8 +130,8 @@ router.post("/login", isLoggedOut, (req, res, next) => {
 
   // Search the database for a user with the username submitted in the form
   User.findOne({
-      username,
-    })
+    username,
+  })
     .then((user) => {
       // If the user isn't found, send the message that user provided wrong credentials
       if (!user) {
@@ -191,40 +186,44 @@ router.get("/event-details", (req, res, next) => {
 
 // Search Routes
 router.get("/search", (req, res, next) => {
-  res.render("auth/search")
-})
+  res.render("auth/search");
+});
 
 router.get("/search-results", (req, res) => {
   // console.log(req.query)
   spotifyApi
-  .searchTracks(req.query.search, {limit: 10})
-  .then(trackResults=> {
-    spotifyApi.searchArtists(req.query.search, {limit: 10})
-    .then((artistResults) => {
-      spotifyApi.searchAlbums(req.query.search, {limit: 10})
-      .then((albumResults) => {
-        // console.log({data: trackResults.body.tracks.items[0], artist: artistResults.body.artists.items})
-        // const data = {
-        //   artists: artistResults.body.artists.items,
-        //   albums: albumResults.body.albums.items,
-        //   tracks: trackResults.body.tracks.items,
-        // }
-        
-        console.log("TRACKS:", trackResults.body.tracks.items)
-        // console.log("ARTISTS:", artistResults.body.artists.items)
-        // console.log("ALBUMS:", albumResults.body.albums.items)
-        res.render("auth/search-results", { 
-          tracksData: trackResults.body.tracks.items,
-          artistsData: artistResults.body.artists.items,
-          albumsData: albumResults.body.albums.items,
-        });
-      
-      }).catch(err => console.log(err))  
-    }).catch(err => console.log(err))
-  }).catch(err => console.log(err))
-})
+    .searchTracks(req.query.search, { limit: 10 })
+    .then((trackResults) => {
+      spotifyApi
+        .searchArtists(req.query.search, { limit: 10 })
+        .then((artistResults) => {
+          spotifyApi
+            .searchAlbums(req.query.search, { limit: 10 })
+            .then((albumResults) => {
+              // console.log({data: trackResults.body.tracks.items[0], artist: artistResults.body.artists.items})
+              // const data = {
+              //   artists: artistResults.body.artists.items,
+              //   albums: albumResults.body.albums.items,
+              //   tracks: trackResults.body.tracks.items,
+              // }
 
-  // const { name, spotifyId: id, imageUrl: images, albums, tracks, genres, popularity } = req.body;
+              console.log("TRACKS:", trackResults.body.tracks.items);
+              // console.log("ARTISTS:", artistResults.body.artists.items)
+              // console.log("ALBUMS:", albumResults.body.albums.items)
+              res.render("auth/search-results", {
+                tracksData: trackResults.body.tracks.items,
+                artistsData: artistResults.body.artists.items,
+                albumsData: albumResults.body.albums.items,
+              });
+            })
+            .catch((err) => console.log(err));
+        })
+        .catch((err) => console.log(err));
+    })
+    .catch((err) => console.log(err));
+});
+
+// const { name, spotifyId: id, imageUrl: images, albums, tracks, genres, popularity } = req.body;
 
 // router.get("/search-results/:id", (req, res) => {
 //   // console.log(req.params.id);
@@ -234,7 +233,7 @@ router.get("/search-results", (req, res) => {
 //       console.log(trackDetails.body)
 //       res.render("auth/search-results-details", { tracksData: trackDetails.body })
 //     }).catch(err => console.log(err))
-  
+
 //   if (req.params?.id) {
 //     spotifyApi
 //     .getArtist(req.params.id)
@@ -255,9 +254,14 @@ router.get("/search-results", (req, res) => {
 
 router.get("/search-results/:id/:searchType", (req, res) => {
   // console.log(req.params.id);
-  const search = req.params.searchType === 'tracks' ? spotifyApi.getTrack(req.params.id) : req.params.searchType === 'albums' ? spotifyApi.getAlbum(req.params.id) : spotifyApi.getArtist(req.params.id);
-  
-    search
+  const search =
+    req.params.searchType === "tracks"
+      ? spotifyApi.getTrack(req.params.id)
+      : req.params.searchType === "albums"
+      ? spotifyApi.getAlbum(req.params.id)
+      : spotifyApi.getArtist(req.params.id);
+
+  search
     .then((results) => {
       // console.log(trackDetails.body)
       // search
@@ -265,26 +269,28 @@ router.get("/search-results/:id/:searchType", (req, res) => {
       //   // console.log(artistDetails.body)
       //   search
       //   .then((albumDetails) => {
-          // console.log(results.body)
+      // console.log(results.body)
 
-          const data = {
-            results: results.body,
-            trackResults: req.params.searchType === 'tracks',
-            albumResults: req.params.searchType === 'albums',
-            artistResults: req.params.searchType === 'artists',
-          }
+      const data = {
+        results: results.body,
+        trackResults: req.params.searchType === "tracks",
+        albumResults: req.params.searchType === "albums",
+        artistResults: req.params.searchType === "artists",
+      };
 
-          console.log({data})
-          res.render("auth/search-results-details", data)
+      console.log({ data });
+      res.render("auth/search-results-details", data);
       //   }).catch(err => console.log(err))
       // }).catch(err => console.log(err))
-    }).catch(err => console.log(err))
-  }
-)
-
-router.get("/userlist", (req, res, next) => {
-  res.render("auth/userlist");
+    })
+    .catch((err) => console.log(err));
 });
 
+router.get("/userlist", (req, res, next) => {
+  User.find().then((users) => {
+    //console.log(users[0]);
+    res.render("auth/userlist", { users });
+  });
+});
 
 module.exports = router;
