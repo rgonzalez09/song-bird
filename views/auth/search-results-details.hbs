@@ -1,14 +1,14 @@
     {{#if tracksData}}
-    {{#each tracksData}}
+    {{!-- {{#each tracksData}} --}}
         <div id="track-details">
-            <img src="{{album.images.0.url}}">
-            <h4>{{name}}</h4>
-            <h5>{{album.name}}</h5>
+            <img src="{{tracksData.album.images.0.url}}">
+            <h4>{{tracksData.name}}</h4>
+            <h5>Album:{{tracksData.album.name}}</h5>
         </div>
-    {{/each}}
+    {{!-- {{/each}} --}}
     {{/if}}
 
-    {{#if artistsData}}
+    {{!-- {{#if artistsData}}
     {{#each artistsData}}
         <div id="artist-details">
             <img src="{{album.images.0.url}}">
@@ -25,4 +25,4 @@
             <h4>{{name}}</h4>
         </div>
     {{/each}}
-    {{/if}}
+    {{/if}} --}}

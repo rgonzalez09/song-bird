@@ -7,7 +7,7 @@
         <h5>Tracks</h5>
         {{#each tracksData}}
         <img src="{{album.images.0.url}}" alt="">
-        <a href="/auth/search-results/{{id}}">
+        <a href="/auth/search-results/{{id}}/tracks">
             <p>{{name}}</p>
         </a>
         
@@ -21,7 +21,7 @@
         <h5>Artists</h5>
         {{#each artistsData}}
         <img src="{{images.0.url}}" alt="">
-        <a href="/auth/search-results/{{id}}">
+        <a href="/auth/search-results/{{id}}/artists">
             <p>{{name}}</p>
         </a>
         <hr>
@@ -34,7 +34,7 @@
         <h5>Albums</h5>
         {{#each albumsData}}
         <img src="{{images.0.url}}" alt="">
-        <a href="/auth/search-results/{{id}}">
+        <a href="/auth/search-results/{{id}}/albums">
             <p>{{name}}</p>
         </a>
         <hr>
