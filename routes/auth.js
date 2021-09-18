@@ -2,6 +2,7 @@ require("dotenv").config();
 const router = require("express").Router();
 const axios = require("axios");
 const SpotifyWebApi = require("spotify-web-api-node");
+const Comment = require("../models/Recomended.model")
 
 // setting the spotify-api goes here:
 const spotifyApi = new SpotifyWebApi({
@@ -35,15 +36,13 @@ router.get("/signup", isLoggedOut, (req, res) => {
 });
 
 router.post("/signup", isLoggedOut, (req, res) => {
-<<<<<<< HEAD
+  console.log(req.body);
   const {
     username,
-    password
+    password,
+    firstName,
+    lastName
   } = req.body;
-=======
-  console.log(req.body);
-  const { username, password, firstName, lastName } = req.body;
->>>>>>> 6dc40172b1613001b9c0b54fbd0e94382662bfdb
 
   if (!username) {
     return res.status(400).render("auth/signup", {
@@ -184,9 +183,35 @@ router.get("/logout", isLoggedIn, (req, res) => {
   });
 });
 
+// POPULATE COMMENTS ON PROFILE
+
 router.get("/profile", (req, res, next) => {
-  res.render("auth/profile");
+  Comment.find().populate("name")
+    .then((commentsFromDB) => {
+      console.log(commentsFromDB);
+      res.render("auth/profile", commentsFromDB);
+    })
+
 });
+
+
+router.get("/create", isLoggedIn, (req, res, next) => {
+
+  res.render("auth/create");
+});
+// create for comments post route
+router.post(
+  "/create",
+  isLoggedIn,
+  (req, res) => {
+    Comment.create({
+      ...req.body,
+      owner: req.session.user._id
+    }).then(createdComment => {
+      console.log('createdComment 188:', createdComment);
+      res.redirect("/auth/profile");
+    })
+  })
 
 router.get("/discover-events", (req, res, next) => {
   res.render("auth/discover-events");
@@ -296,13 +321,7 @@ router.get("/search-results/:searchType/:id", (req, res) => {
         artistResults: req.params.searchType === "artists",
       };
 
-<<<<<<< HEAD
-      console.log({
-        data
-      });
-=======
       // console.log({ data });
->>>>>>> 6dc40172b1613001b9c0b54fbd0e94382662bfdb
       res.render("auth/search-results-details", data);
       //   }).catch(err => console.log(err))
       // }).catch(err => console.log(err))
