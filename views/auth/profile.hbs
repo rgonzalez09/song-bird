@@ -1,21 +1,26 @@
 
 <h3>My Artists</h3>
+{{#if isLoggedInUser}}
 <form action= "" method="POST">
     <label>
         <input type="text" placeholder="Add New Favorite Artist">
     </label>
     <button type="submit">Submit</button>
 </form>
+{{/if}}
 <h3>My Favorite Songs</h3>
+{{#if isLoggedInUser}}
+<form action= "" method="POST">
     <label>
         <input type="text" placeholder="Add New Favorite Song">
     </label>
     <button type="submit">Submit</button>
+</form>
 <br>
 <br>
 <a href="/auth/discover-events">Discover Events</a>
 <a href="/auth/search">Discover New Music</a>
-
+{{/if}}
 <br>
 <br>
 <form class="/" method ="POST">
@@ -34,6 +39,3 @@
 {{/each}}
 
 
-
-<div class="app-placeholder-calendar" data-id="proj_yOjGktpfcdO43IwG4WG5V"></div>
-<script type="text/javascript" src="//platform.eventscalendar.co/plugins/web/loader.js?app=calendar" id="Inffuse-Loader"></script>
