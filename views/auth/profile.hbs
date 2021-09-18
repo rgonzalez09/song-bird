@@ -30,3 +30,12 @@
 <br>
 <button type="submit">Submit</button>
 </form>
+
+<h3>Comments</h3>
+{{#each this}}
+<h3>{{name}}</h3>
+<img src="{{imageUrl}}" alt="{{name}}" height="200"
+<p>{{owner}} - {{description}}</p>
+{{/each}}
+
+
