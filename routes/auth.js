@@ -35,7 +35,10 @@ router.get("/signup", isLoggedOut, (req, res) => {
 });
 
 router.post("/signup", isLoggedOut, (req, res) => {
-  const { username, password } = req.body;
+  const {
+    username,
+    password
+  } = req.body;
 
   if (!username) {
     return res.status(400).render("auth/signup", {
@@ -81,6 +84,8 @@ router.post("/signup", isLoggedOut, (req, res) => {
         return User.create({
           username,
           password: hashedPassword,
+          firstName,
+          lastName,
         });
       })
       .then((user) => {
@@ -96,8 +101,7 @@ router.post("/signup", isLoggedOut, (req, res) => {
         }
         if (error.code === 11000) {
           return res.status(400).render("auth/signup", {
-            errorMessage:
-              "Username need to be unique. The username you chose is already in use.",
+            errorMessage: "Username need to be unique. The username you chose is already in use.",
           });
         }
         return res.status(500).render("auth/signup", {
@@ -112,7 +116,10 @@ router.get("/login", isLoggedOut, (req, res) => {
 });
 
 router.post("/login", isLoggedOut, (req, res, next) => {
-  const { username, password } = req.body;
+  const {
+    username,
+    password
+  } = req.body;
 
   if (!username) {
     return res.status(400).render("auth/login", {
@@ -130,8 +137,8 @@ router.post("/login", isLoggedOut, (req, res, next) => {
 
   // Search the database for a user with the username submitted in the form
   User.findOne({
-    username,
-  })
+      username,
+    })
     .then((user) => {
       // If the user isn't found, send the message that user provided wrong credentials
       if (!user) {
@@ -192,13 +199,19 @@ router.get("/search", (req, res, next) => {
 router.get("/search-results", (req, res) => {
   // console.log(req.query)
   spotifyApi
-    .searchTracks(req.query.search, { limit: 10 })
+    .searchTracks(req.query.search, {
+      limit: 10
+    })
     .then((trackResults) => {
       spotifyApi
-        .searchArtists(req.query.search, { limit: 10 })
+        .searchArtists(req.query.search, {
+          limit: 10
+        })
         .then((artistResults) => {
           spotifyApi
-            .searchAlbums(req.query.search, { limit: 10 })
+            .searchAlbums(req.query.search, {
+              limit: 10
+            })
             .then((albumResults) => {
               // console.log({data: trackResults.body.tracks.items[0], artist: artistResults.body.artists.items})
               // const data = {
@@ -255,11 +268,11 @@ router.get("/search-results", (req, res) => {
 router.get("/search-results/:id/:searchType", (req, res) => {
   // console.log(req.params.id);
   const search =
-    req.params.searchType === "tracks"
-      ? spotifyApi.getTrack(req.params.id)
-      : req.params.searchType === "albums"
-      ? spotifyApi.getAlbum(req.params.id)
-      : spotifyApi.getArtist(req.params.id);
+    req.params.searchType === "tracks" ?
+    spotifyApi.getTrack(req.params.id) :
+    req.params.searchType === "albums" ?
+    spotifyApi.getAlbum(req.params.id) :
+    spotifyApi.getArtist(req.params.id);
 
   search
     .then((results) => {
@@ -278,7 +291,9 @@ router.get("/search-results/:id/:searchType", (req, res) => {
         artistResults: req.params.searchType === "artists",
       };
 
-      console.log({ data });
+      console.log({
+        data
+      });
       res.render("auth/search-results-details", data);
       //   }).catch(err => console.log(err))
       // }).catch(err => console.log(err))
@@ -289,7 +304,9 @@ router.get("/search-results/:id/:searchType", (req, res) => {
 router.get("/userlist", (req, res, next) => {
   User.find().then((users) => {
     //console.log(users[0]);
-    res.render("auth/userlist", { users });
+    res.render("auth/userlist", {
+      users
+    });
   });
 });
 
