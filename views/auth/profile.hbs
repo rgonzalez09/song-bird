@@ -41,10 +41,18 @@
 <br>
 {{!-- {{#if user equals ownerOfComment then show comments}} --}}
 
-
-{{#each userComments}}
-<h3>{{this.owner.username}}</h3>
-<p>{{this.comment}}</p>
-{{/each}}
-
+<div id="comment">
+    {{#each userComments}}
+        <div class="comment-box">
+            <div>
+                <h3>{{this.owner.username}}</h3>
+                {{!-- Create new variable that will check to see if loggedinuser equals commentOwner --}}
+                {{#if isLoggedInUser}}
+                <button>Delete</button>
+                {{/if}}
+            </div>
+            <p>{{this.comment}}</p>
+        </div>
+    {{/each}}
+</div>
 
