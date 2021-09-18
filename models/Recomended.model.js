@@ -4,9 +4,6 @@ const {
 } = require("mongoose");
 
 const commentsSchema = new Schema({
-    name: {
-        type: String
-    },
     comment: {
         type: String
     },
@@ -17,10 +14,10 @@ const commentsSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "User"
     },
-    reviews: [{
-        type: Schema.Types.ObjectId,
-        ref: "Review"
-    }],
+    commentAbout: {
+        type: Schema.Types.ObjectId, 
+        ref: "User"
+    }
 });
 
 const Comments = model("Comments", commentsSchema);

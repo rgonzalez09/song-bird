@@ -192,50 +192,52 @@ router.get("/profile/:id", (req, res, next) => {
       Comment.find().populate("owner").then((commentsFromDB) => {
         const userComments = commentsFromDB.filter((singleComment) => {
   
-          return singleComment.owner.equals(user._id);
+          return String(singleComment.commentAbout) === String(user._id)
         
         });
         
         const data = {
-          // user,
+          user,
           isLoggedInUser: String(user._id) === String(req.session.user._id),
           userComments,
         };
         res.render("auth/profile", data);
       })
         
-      })
+    })
     .catch((err) => console.log(err));
 });
 
 // POPULATE COMMENTS ON PROFILE
+// router.get("/profile", (req, res, next) => {
+//   Comment.find().populate("owner")
+//     .then((commentsFromDB) => {
+//       // console.log(commentsFromDB);
+//       res.render("auth/profile", commentsFromDB);
+//     })
 
-router.get("/profile", (req, res, next) => {
-  Comment.find().populate("owner")
-    .then((commentsFromDB) => {
-      // console.log(commentsFromDB);
-      res.render("auth/profile", commentsFromDB);
-    })
+// });
 
-});
-
-
+// Create Comments
 router.get("/create", isLoggedIn, (req, res, next) => {
-
   res.render("auth/create");
 });
+
 // create for comments post route
 router.post(
-  "/create",
+  "/create/:id",
   isLoggedIn,
   (req, res) => {
+    console.log('Creating commment', req.params.id)
     Comment.create({
       ...req.body,
       // owner: req.session.user._id
-      owner: req.session.user
+      owner: req.session.user,
+      commentAbout: req.params.id,
     }).then(createdComment => {
       console.log(createdComment.owner);
-      res.redirect(`/auth/profile/${req.session.user._id}`);
+      // res.redirect(`/auth/profile/${req.params.id}`);
+      res.redirect(`back`)
     })
   })
 
