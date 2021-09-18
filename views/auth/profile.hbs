@@ -8,6 +8,9 @@
     <button type="submit">Submit</button>
 </form>
 {{/if}}
+<br>
+<br>
+
 <h3>My Favorite Songs</h3>
 {{#if isLoggedInUser}}
 <form action= "" method="POST">
@@ -23,23 +26,16 @@
 {{/if}}
 <br>
 <br>
-<form class="/" method ="POST">
-<label for="recommendations">Recommend Music
-    <br><textarea name="recommendations" rows="4" cols="30"></textarea>
-</label>
-<br>
-<button type="submit">Submit</button>
+
 </form>
 <br>
 <br>
 <h3>Comments</h3>
-<br>
-<h4>Create New Comment</h4>
 <form action="/auth/create" method="post">
     <br>
-    <input type="text" name="comment" placeholder="Leave a comment">
+    <textarea name="comment" rows="4" cols="30"></textarea>
     <br>
-    <button type ='submit'>Create New Comment</button>
+    <button type ='submit'>Submit Comment</button>
 </form>
 {{#each this}}
 <h3>{{owner.username}}</h3>
