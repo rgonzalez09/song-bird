@@ -255,7 +255,7 @@ router.get("/search-results", (req, res) => {
 //   }
 // })
 
-router.get("/search-results/:id/:searchType", (req, res) => {
+router.get("/search-results/:searchType/:id", (req, res) => {
   // console.log(req.params.id);
   const search =
     req.params.searchType === "tracks"
