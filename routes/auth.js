@@ -186,15 +186,25 @@ router.get("/logout", isLoggedIn, (req, res) => {
 router.get("/profile/:id", (req, res, next) => {
   User.findById(req.params.id)
     .then((user) => {
-      console.log({
-        user: String(user._id) === String(req.session.user._id)
-      });
-      const data = {
-        user,
-        isLoggedInUser: String(user._id) === String(req.session.user._id),
-      };
-      res.render("auth/profile", data);
-    })
+      // console.log({
+      //   user: String(user._id) === String(req.session.user._id)
+      // });
+      Comment.find().populate("owner").then((commentsFromDB) => {
+        const userComments = commentsFromDB.filter((singleComment) => {
+  
+          return singleComment.owner.equals(user._id);
+        
+        });
+        
+        const data = {
+          // user,
+          isLoggedInUser: String(user._id) === String(req.session.user._id),
+          userComments,
+        };
+        res.render("auth/profile", data);
+      })
+        
+      })
     .catch((err) => console.log(err));
 });
 
@@ -225,7 +235,7 @@ router.post(
       owner: req.session.user
     }).then(createdComment => {
       console.log(createdComment.owner);
-      res.redirect("/auth/profile");
+      res.redirect(`/auth/profile/${req.session.user._id}`);
     })
   })
 
