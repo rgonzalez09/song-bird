@@ -175,8 +175,17 @@ router.get("/logout", isLoggedIn, (req, res) => {
   });
 });
 
-router.get("/profile", (req, res, next) => {
-  res.render("auth/profile");
+router.get("/profile/:id", (req, res, next) => {
+  User.findById(req.params.id)
+    .then((user) => {
+      console.log({ user: String(user._id) === String(req.session.user._id) });
+      const data = {
+        user,
+        isLoggedInUser: String(user._id) === String(req.session.user._id),
+      };
+      res.render("auth/profile", data);
+    })
+    .catch((err) => console.log(err));
 });
 
 router.get("/discover-events", (req, res, next) => {
