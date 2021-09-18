@@ -18,11 +18,11 @@
                <li class = "nav-header" id="home-li"><a href="/">Home</a></li>
                <li class = "nav-header" id="signup-li"><a href="/auth/signup">Sign Up</a></li>
                <li class = "nav-header" id="signin-li"><a href="/auth/login">Sign In</a></li>
-               <li class = "nav-header" id="profile-li"><a href="/auth/profile/{{currentUser._id}}">Profile</a></li>
-               <li class = "nav-header" id="directory-li"><a href="/auth/userlist">Directory</a></li>
 
                {{#if currentUser}}
-                  <h3>Where Da Frack is my log out button!?</h3>
+               <li class = "nav-header" id="profile-li"><a href="/auth/profile/{{currentUser._id}}">Profile</a></li>
+               <li class = "nav-header" id="directory-li"><a href="/auth/userlist">Directory</a></li>
+               <li class = "nav-header" id="logout"><a href="/auth/logout">Logout</a></li>
                {{/if}}
             </ul>
          </nav>
