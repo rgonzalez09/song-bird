@@ -10,10 +10,12 @@
 {{/if}}
 <h3>My Favorite Songs</h3>
 {{#if isLoggedInUser}}
+<form action= "" method="POST">
     <label>
         <input type="text" placeholder="Add New Favorite Song">
     </label>
     <button type="submit">Submit</button>
+</form>
 <br>
 <br>
 <a href="/auth/discover-events">Discover Events</a>
