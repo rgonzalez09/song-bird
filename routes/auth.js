@@ -35,10 +35,15 @@ router.get("/signup", isLoggedOut, (req, res) => {
 });
 
 router.post("/signup", isLoggedOut, (req, res) => {
+<<<<<<< HEAD
   const {
     username,
     password
   } = req.body;
+=======
+  console.log(req.body);
+  const { username, password, firstName, lastName } = req.body;
+>>>>>>> 6dc40172b1613001b9c0b54fbd0e94382662bfdb
 
   if (!username) {
     return res.status(400).render("auth/signup", {
@@ -265,7 +270,7 @@ router.get("/search-results", (req, res) => {
 //   }
 // })
 
-router.get("/search-results/:id/:searchType", (req, res) => {
+router.get("/search-results/:searchType/:id", (req, res) => {
   // console.log(req.params.id);
   const search =
     req.params.searchType === "tracks" ?
@@ -291,9 +296,13 @@ router.get("/search-results/:id/:searchType", (req, res) => {
         artistResults: req.params.searchType === "artists",
       };
 
+<<<<<<< HEAD
       console.log({
         data
       });
+=======
+      // console.log({ data });
+>>>>>>> 6dc40172b1613001b9c0b54fbd0e94382662bfdb
       res.render("auth/search-results-details", data);
       //   }).catch(err => console.log(err))
       // }).catch(err => console.log(err))
