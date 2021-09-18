@@ -37,10 +37,12 @@
     <br>
     <button type ='submit'>Submit Comment</button>
 </form>
-{{#each this}}
-<h3>{{owner.username}}</h3>
-<img src="{{imageUrl}}" height="200"
-<p>{{comment}}</p>
+<br>
+{{!-- {{#if user equals ownerOfComment then show comments}} --}}
+
+{{#each userComments}}
+<h3>{{this.owner.username}}</h3>
+<p>{{this.comment}}</p>
 {{/each}}
 
 
