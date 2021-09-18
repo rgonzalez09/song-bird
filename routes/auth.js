@@ -201,9 +201,9 @@ router.get("/profile/:id", (req, res, next) => {
 // POPULATE COMMENTS ON PROFILE
 
 router.get("/profile", (req, res, next) => {
-  Comment.find().populate("name")
+  Comment.find().populate("owner")
     .then((commentsFromDB) => {
-      console.log(commentsFromDB);
+      // console.log(commentsFromDB);
       res.render("auth/profile", commentsFromDB);
     })
 
@@ -221,9 +221,10 @@ router.post(
   (req, res) => {
     Comment.create({
       ...req.body,
-      owner: req.session.user._id
+      // owner: req.session.user._id
+      owner: req.session.user
     }).then(createdComment => {
-      console.log('createdComment 188:', createdComment);
+      console.log(createdComment.owner);
       res.redirect("/auth/profile");
     })
   })
