@@ -30,12 +30,21 @@
 <br>
 <button type="submit">Submit</button>
 </form>
-
+<br>
+<br>
 <h3>Comments</h3>
+<br>
+<h4>Create New Comment</h4>
+<form action="/auth/create" method="post">
+    <br>
+    <input type="text" name="comment" placeholder="Leave a comment">
+    <br>
+    <button type ='submit'>Create New Comment</button>
+</form>
 {{#each this}}
-<h3>{{name}}</h3>
-<img src="{{imageUrl}}" alt="{{name}}" height="200"
-<p>{{owner}} - {{description}}</p>
+<h3>{{owner.username}}</h3>
+<img src="{{imageUrl}}" height="200"
+<p>{{comment}}</p>
 {{/each}}
 
 
