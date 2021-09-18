@@ -42,7 +42,7 @@ const capitalized = (string) =>
 app.locals.title = `${capitalized(projectName)} created with IronLauncher`;
 
 app.use((req, res, next) => {
-  res.locals.currentUser = req.session.user;
+  res.locals.currentUser = req.session.user || false;
   next();
 });
 
