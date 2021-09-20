@@ -2,7 +2,7 @@ require("dotenv").config();
 const router = require("express").Router();
 const axios = require("axios");
 const SpotifyWebApi = require("spotify-web-api-node");
-const Comment = require("../models/Recomended.model")
+const Comment = require("../models/Recomended.model");
 
 // setting the spotify-api goes here:
 const spotifyApi = new SpotifyWebApi({
@@ -37,12 +37,7 @@ router.get("/signup", isLoggedOut, (req, res) => {
 
 router.post("/signup", isLoggedOut, (req, res) => {
   console.log(req.body);
-  const {
-    username,
-    password,
-    firstName,
-    lastName
-  } = req.body;
+  const { username, password, firstName, lastName } = req.body;
 
   if (!username) {
     return res.status(400).render("auth/signup", {
@@ -105,7 +100,8 @@ router.post("/signup", isLoggedOut, (req, res) => {
         }
         if (error.code === 11000) {
           return res.status(400).render("auth/signup", {
-            errorMessage: "Username need to be unique. The username you chose is already in use.",
+            errorMessage:
+              "Username need to be unique. The username you chose is already in use.",
           });
         }
         return res.status(500).render("auth/signup", {
@@ -120,10 +116,7 @@ router.get("/login", isLoggedOut, (req, res) => {
 });
 
 router.post("/login", isLoggedOut, (req, res, next) => {
-  const {
-    username,
-    password
-  } = req.body;
+  const { username, password } = req.body;
 
   if (!username) {
     return res.status(400).render("auth/login", {
@@ -141,8 +134,8 @@ router.post("/login", isLoggedOut, (req, res, next) => {
 
   // Search the database for a user with the username submitted in the form
   User.findOne({
-      username,
-    })
+    username,
+  })
     .then((user) => {
       // If the user isn't found, send the message that user provided wrong credentials
       if (!user) {
@@ -189,54 +182,60 @@ router.get("/profile/:id", (req, res, next) => {
       // console.log({
       //   user: String(user._id) === String(req.session.user._id)
       // });
-      Comment.find().populate("owner").then((commentsFromDB) => {
-        const userComments = commentsFromDB.filter((singleComment) => {
-  
-          return String(singleComment.commentAbout) === String(user._id)
-        
-        });
-        const canDelete = userComments.filter(singleComment => {
-          return String(singleComment.commentAbout) === String(req.session.user._id)
-        })
-        
-        const data = {
-          user,
-          isLoggedInUser: String(user._id) === String(req.session.user._id),
-          userComments,
-          canDelete,
-          // canDelete: String(req.session.user._id) === userComments.forEach(e => String(e.commentAbout)),
-        };
+      Comment.find()
+        .populate("owner")
+        .then((commentsFromDB) => {
+          const userComments = commentsFromDB.filter((singleComment) => {
+            return String(singleComment.commentAbout) === String(user._id);
+          });
+          const canDelete = userComments.filter((singleComment) => {
+            return (
+              String(singleComment.commentAbout) ===
+              String(req.session.user._id)
+            );
+          });
 
-        const dataContainer = {
-          data
-        }
-        // console.log(userComments)
-        console.log("Can delete:", data.canDelete)
-        // res.render("auth/profile", data);
-        res.render("auth/profile", dataContainer)
-      })
-        
+          const data = {
+            user,
+            isLoggedInUser: String(user._id) === String(req.session.user._id),
+            userComments,
+            canDelete,
+            // canDelete: String(req.session.user._id) === userComments.forEach(e => String(e.commentAbout)),
+          };
+
+          const dataContainer = {
+            data,
+          };
+          // console.log(userComments)
+          //console.log("Can delete:", data.canDelete);
+          // res.render("auth/profile", data);
+          res.render("auth/profile", dataContainer);
+        });
     })
     .catch((err) => console.log(err));
 });
 
 // create for comments post route
-router.post(
-  "/create/:id",
-  isLoggedIn,
-  (req, res) => {
-    console.log('Creating commment', req.params.id)
-    Comment.create({
-      ...req.body,
-      // owner: req.session.user._id
-      owner: req.session.user,
-      commentAbout: req.params.id,
-    }).then(createdComment => {
-      console.log(createdComment.owner);
-      // res.redirect(`/auth/profile/${req.params.id}`);
-      res.redirect(`back`)
-    })
-  })
+router.post("/create/:id", isLoggedIn, (req, res) => {
+  console.log("Creating commment", req.params.id);
+  Comment.create({
+    ...req.body,
+    // owner: req.session.user._id
+    owner: req.session.user,
+    commentAbout: req.params.id,
+  }).then((createdComment) => {
+    //console.log(createdComment.owner);
+    // res.redirect(`/auth/profile/${req.params.id}`);
+    res.redirect(`back`);
+  });
+});
+
+router.post("/:id/delete", isLoggedIn, (req, res, next) => {
+  Comment.findByIdAndDelete(req.params.id).then(() => {
+    console.log(req.params);
+    res.redirect(`back`);
+  });
+});
 
 router.get("/discover-events", (req, res, next) => {
   res.render("auth/discover-events");
@@ -255,17 +254,17 @@ router.get("/search-results", (req, res) => {
   // console.log(req.query)
   spotifyApi
     .searchTracks(req.query.search, {
-      limit: 10
+      limit: 10,
     })
     .then((trackResults) => {
       spotifyApi
         .searchArtists(req.query.search, {
-          limit: 10
+          limit: 10,
         })
         .then((artistResults) => {
           spotifyApi
             .searchAlbums(req.query.search, {
-              limit: 10
+              limit: 10,
             })
             .then((albumResults) => {
               // console.log({data: trackResults.body.tracks.items[0], artist: artistResults.body.artists.items})
@@ -293,15 +292,14 @@ router.get("/search-results", (req, res) => {
 
 // const { name, spotifyId: id, imageUrl: images, albums, tracks, genres, popularity } = req.body;
 
-
 router.get("/search-results/:searchType/:id", (req, res) => {
   // console.log(req.params.id);
   const search =
-    req.params.searchType === "tracks" ?
-    spotifyApi.getTrack(req.params.id) :
-    req.params.searchType === "albums" ?
-    spotifyApi.getAlbum(req.params.id) :
-    spotifyApi.getArtist(req.params.id);
+    req.params.searchType === "tracks"
+      ? spotifyApi.getTrack(req.params.id)
+      : req.params.searchType === "albums"
+      ? spotifyApi.getAlbum(req.params.id)
+      : spotifyApi.getArtist(req.params.id);
 
   search
     .then((results) => {
@@ -332,7 +330,7 @@ router.get("/userlist", (req, res, next) => {
   User.find().then((users) => {
     //console.log(users[0]);
     res.render("auth/userlist", {
-      users
+      users,
     });
   });
 });
