@@ -52,7 +52,9 @@
                     
                 </div>
                 <p>{{this.comment}}</p>
+                <form action="/auth/{{_id}}/delete" method="POST">
                     <button>Delete</button>
+                </form>
             </div>
         {{/each}}
     </div>
