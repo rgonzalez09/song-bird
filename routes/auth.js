@@ -195,13 +195,25 @@ router.get("/profile/:id", (req, res, next) => {
           return String(singleComment.commentAbout) === String(user._id)
         
         });
+        const canDelete = userComments.filter(singleComment => {
+          return String(singleComment.commentAbout) === String(req.session.user._id)
+        })
         
         const data = {
           user,
           isLoggedInUser: String(user._id) === String(req.session.user._id),
           userComments,
+          canDelete,
+          // canDelete: String(req.session.user._id) === userComments.forEach(e => String(e.commentAbout)),
         };
-        res.render("auth/profile", data);
+
+        const dataContainer = {
+          data
+        }
+        // console.log(userComments)
+        console.log("Can delete:", data.canDelete)
+        // res.render("auth/profile", data);
+        res.render("auth/profile", dataContainer)
       })
         
     })
