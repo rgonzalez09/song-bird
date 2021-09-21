@@ -333,7 +333,7 @@ router.get("/search-results/:searchType/:id", (req, res) => {
         artistResults: req.params.searchType === "artists",
       };
 
-      // console.log({ data });
+      // console.log(data.results);
       res.render("auth/search-results-details", data);
       //   }).catch(err => console.log(err))
       // }).catch(err => console.log(err))
