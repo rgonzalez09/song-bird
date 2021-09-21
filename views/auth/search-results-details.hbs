@@ -2,8 +2,22 @@
     {{!-- {{#each tracksData}} --}}
         <div id="track-details">
             <img src="{{results.album.images.0.url}}">
-            <h4>{{results.name}}</h4>
-            <h5>Album:{{results.album.name}}</h5>
+            <h4>
+                <b>
+                {{results.name}} by 
+                {{#each results.artists}}
+                <a href="/auth/search-results/artists/{{id}}">{{name}},</a> 
+                {{/each}}
+                </b>
+            </h4>
+            <h5><b>Album:</b> {{results.album.name}}</h5>
+            <h5><b>Popularity Score:</b> {{results.popularity}}/100 </h5>
+            <br>
+            <audio controls>
+                <source src={{results.preview_url}} type="audio/ogg">
+                <source src={{results.preview_url}} type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
         </div>
     {{!-- {{/each}} --}}
     {{/if}}
