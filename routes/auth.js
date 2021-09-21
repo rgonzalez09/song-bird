@@ -237,12 +237,6 @@ router.post("/:id/delete", isLoggedIn, (req, res, next) => {
   });
 });
 
-//router.get("/auth/:id/edit", isLoggedIn, (req, res, next) => {
-//  Comment.findByIdAndUpdate(req.params.id).then((commentToUpdate) => {
-//   res.render("auth/edit", commentToUpdate);
-// });
-//});
-
 router.get("/:id/edit", (req, res, next) => {
   Comment.findById(req.params.id).then((commentToUpdate) => {
     console.log(commentToUpdate);
@@ -250,10 +244,12 @@ router.get("/:id/edit", (req, res, next) => {
   });
 });
 
-//console.log(String(commentToUpdate.commentAbout));
-router.post("/:id/edit", (req, res, next) => {
-  Comment.findByIdAndUpdate(req.params.id).then((commentToUpdate) => {
-    res.redirect(`/auth/profile/${commentToUpdate.commentAbout}`);
+router.post(`/:id/edit`, (req, res, next) => {
+  const { id } = req.params;
+  const { comment } = req.body;
+  Comment.findByIdAndUpdate(id, { comment }).then((commentToUpdate) => {
+    //console.log(commentToUpdate);
+    res.redirect(`/auth/profile/${String(commentToUpdate.commentAbout)}`);
   });
 });
 
