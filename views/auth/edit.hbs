@@ -3,6 +3,9 @@
 
 
 <form action="/auth/{{_id}}/edit" method="POST">
-    <input value= "{{comment}}">
+    <textarea name= "comment" cols="30" rows="4">
+        {{comment}}
+        </textarea>
+        <br>
     <button type="submit">Submit Changes</button>    
 </form>
