@@ -232,8 +232,28 @@ router.post("/create/:id", isLoggedIn, (req, res) => {
 
 router.post("/:id/delete", isLoggedIn, (req, res, next) => {
   Comment.findByIdAndDelete(req.params.id).then(() => {
-    console.log(req.params);
+    //console.log(req.params);
     res.redirect(`back`);
+  });
+});
+
+//router.get("/auth/:id/edit", isLoggedIn, (req, res, next) => {
+//  Comment.findByIdAndUpdate(req.params.id).then((commentToUpdate) => {
+//   res.render("auth/edit", commentToUpdate);
+// });
+//});
+
+router.get("/:id/edit", (req, res, next) => {
+  Comment.findById(req.params.id).then((commentToUpdate) => {
+    console.log(commentToUpdate);
+    res.render("auth/edit", commentToUpdate);
+  });
+});
+
+//console.log(String(commentToUpdate.commentAbout));
+router.post("/:id/edit", (req, res, next) => {
+  Comment.findByIdAndUpdate(req.params.id).then((commentToUpdate) => {
+    res.redirect(`/auth/profile/${commentToUpdate.commentAbout}`);
   });
 });
 
