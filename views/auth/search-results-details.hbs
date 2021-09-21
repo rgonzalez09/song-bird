@@ -27,8 +27,20 @@
     {{!-- {{#each artistsData}} --}}
         <div id="artist-details">
             <img src="{{results.images.0.url}}">
-            <h4>{{results.name}}</h4>
-            
+            <h4>
+                <b>
+                    <a href="/auth/search-results?search={{results.name}}">{{results.name}}</a> 
+                </b>
+            </h4>
+            <br>
+            <h4>
+                <b>
+                Genres:
+                </b>
+                {{results.genres}}
+            </h4>
+            <h5><b>Popularity:</b> {{results.popularity}}</h5>
+
         </div>
     {{!-- {{/each}} --}}
     {{/if}}
