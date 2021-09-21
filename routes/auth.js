@@ -189,10 +189,9 @@ router.get("/profile/:id", (req, res, next) => {
             return String(singleComment.commentAbout) === String(user._id);
           });
           const canDelete = userComments.filter((singleComment) => {
-            return (
-              String(singleComment.commentAbout) ===
-              String(req.session.user._id)
-            );
+            const isProfileOwner = String(singleComment.commentAbout) === String(req.session.user._id);
+            const isCommentOwner = String(singleComment.owner._id) === String(req.session.user._id);
+            return isProfileOwner || isCommentOwner
           });
 
           const data = {
@@ -232,24 +231,8 @@ router.post("/create/:id", isLoggedIn, (req, res) => {
 
 router.post("/:id/delete", isLoggedIn, (req, res, next) => {
   Comment.findByIdAndDelete(req.params.id).then(() => {
-    //console.log(req.params);
+    console.log(req.params);
     res.redirect(`back`);
-  });
-});
-
-router.get("/:id/edit", (req, res, next) => {
-  Comment.findById(req.params.id).then((commentToUpdate) => {
-    console.log(commentToUpdate);
-    res.render("auth/edit", commentToUpdate);
-  });
-});
-
-router.post(`/:id/edit`, (req, res, next) => {
-  const { id } = req.params;
-  const { comment } = req.body;
-  Comment.findByIdAndUpdate(id, { comment }).then((commentToUpdate) => {
-    //console.log(commentToUpdate);
-    res.redirect(`/auth/profile/${String(commentToUpdate.commentAbout)}`);
   });
 });
 
