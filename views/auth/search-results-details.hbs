@@ -10,6 +10,7 @@
                 {{/each}}
                 </b>
             </h4>
+            <br>
             <h5><b>Album:</b> {{results.album.name}}</h5>
             <h5><b>Popularity Score:</b> {{results.popularity}}/100 </h5>
             <br>
@@ -36,7 +37,29 @@
     {{!-- {{#each albumsData}} --}}
         <div id="album-details">
             <img src="{{results.images.0.url}}">
-            <h4>{{results.name}}</h4>
+            <h4><b>{{results.name}}</b></h4>
+            <br>
+            <h5>
+                <b>
+                Artists:
+                {{#each results.artists}}
+                <a href="/auth/search-results/artists/{{id}}">{{name}},</a> 
+                {{/each}}
+                </b>
+            </h5>
+            <h5><b>Popularity Score:</b> {{results.popularity}}/100 </h5>
+            <h5><b>Label:</b> {{results.label}}</h5>
+            <h5><b>Release:</b> {{results.release_date}}</h5>
+            <br>
+            <div><h5><b>Track List:</b></h5>
+            <ul class="track-list">  
+                {{#each results.tracks.items}}
+                    <li>
+                        <a href="/auth/search-results/tracks/{{id}}">{{name}}</a> 
+                    </li>
+                {{/each}}
+            </ul> 
+            </div>
         </div>
     {{!-- {{/each}} --}}
     {{/if}}
