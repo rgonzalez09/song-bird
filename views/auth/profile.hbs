@@ -10,7 +10,10 @@
 <br>
 
 <h3>My Favorite Songs</h3>
-
+    {{#each user.favoriteTrack}}
+        {{name}}
+       <img src="{{album.images.0.url}}" alt=""> 
+    {{/each}}
 
 <br>
 <br>

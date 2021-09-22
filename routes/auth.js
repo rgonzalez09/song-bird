@@ -407,7 +407,7 @@ router.post("/save-favorite-song/:id", (req, res) => {
               ...track.body,
               spotifyId: track.body.id,
             });
-            // console.log({ createdtrack });
+            // console.log(createdtrack.album.images );
             trackId = createdtrack._id;
           }
           // console.log({ responseFromDB });
