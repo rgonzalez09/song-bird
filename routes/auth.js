@@ -308,8 +308,6 @@ router.get("/search-results", (req, res) => {
     .catch((err) => console.log(err));
 });
 
-// const { name, spotifyId: id, imageUrl: images, albums, tracks, genres, popularity } = req.body;
-
 router.get("/search-results/:searchType/:id", (req, res) => {
   // console.log(req.params.id);
   const search =
@@ -379,7 +377,7 @@ router.post("/save-favorite-artist/:id", (req, res) => {
             },
             { new: true }
           );
-          console.log({ user });
+          // console.log({ user });
         }
       );
     })
@@ -387,42 +385,130 @@ router.post("/save-favorite-artist/:id", (req, res) => {
       res.redirect(`/auth/profile/${favoriteOwner}`);
     });
 });
+
+// =============================FAVORITE SONG POST
 router.post("/save-favorite-song/:id", (req, res) => {
   const favoriteOwner = req.session.user._id;
   spotifyApi
     .getTrack(req.params.id)
     .then((track) => {
-      //console.log(track);
-      Track.create({
-        ...track.body,
-        id: track.body.id,
-        previewUrl: track.body.preview_url || "",
-        favoriteOwner,
-      });
+      //console.log(track.body);
+      // 1 find out wheter the track exists in your track collection
+      // 2a if yes, grab his _id and update users arr with it
+      // 2b if no, vcreate a new track and update userts arr with items
+
+      Track.findOne({ spotifyId: track.body.id }).then(
+        async (responseFromDB) => {
+          let trackId = null;
+          if (responseFromDB) {
+            trackId = responseFromDB._id;
+          } else {
+            const createdtrack = await Track.create({
+              ...track.body,
+              spotifyId: track.body.id,
+            });
+            // console.log({ createdtrack });
+            trackId = createdtrack._id;
+          }
+          // console.log({ responseFromDB });
+          const user = await User.findByIdAndUpdate(
+            req.session.user._id,
+            {
+              $push: {
+                favoriteTrack: trackId,
+              },
+            },
+            { new: true }
+          );
+          // console.log({ user });
+        }
+      );
     })
     .then(() => {
       res.redirect(`/auth/profile/${favoriteOwner}`);
     });
 });
 
-router.post("/save-favorite-album/:id", (req, res, next) => {
+// router.post("/save-favorite-song/:id", (req, res) => {
+//   const favoriteOwner = req.session.user._id;
+//   spotifyApi
+//     .getTrack(req.params.id)
+//     .then((track) => {
+//       //console.log(track);
+//       Track.create({
+//         ...track.body,
+//         id: track.body.id,
+//         previewUrl: track.body.preview_url || "",
+//         favoriteOwner,
+//       });
+//     })
+//     .then(() => {
+//       res.redirect(`/auth/profile/${favoriteOwner}`);
+//     });
+// });
+
+// =============================FAVORITE ALBUM POST
+
+router.post("/save-favorite-album/:id", (req, res) => {
   const favoriteOwner = req.session.user._id;
   spotifyApi
     .getAlbum(req.params.id)
     .then((album) => {
       //console.log(album.body);
-      Album.create({
-        ...album.body,
-        id: album.body.id,
-        favoriteOwner,
-        totalTracks: album.body.total_tracks,
-        releaseDate: album.body.release_date,
-      });
+      // 1 find out wheter the album exists in your album collection
+      // 2a if yes, grab his _id and update users arr with it
+      // 2b if no, vcreate a new album and update userts arr with items
+
+      Album.findOne({ spotifyId: album.body.id }).then(
+        async (responseFromDB) => {
+          let albumId = null;
+          if (responseFromDB) {
+            albumId = responseFromDB._id;
+          } else {
+            const createdAlbum = await Album.create({
+              ...album.body,
+              spotifyId: album.body.id,
+            });
+            //console.log({ createdalbum });
+            albumId = createdAlbum._id;
+          }
+          //console.log({ responseFromDB });
+          const user = await User.findByIdAndUpdate(
+            req.session.user._id,
+            {
+              $push: {
+                favoriteAlbum: albumId,
+              },
+            },
+            { new: true }
+          );
+          // console.log({ user });
+        }
+      );
     })
     .then(() => {
       res.redirect(`/auth/profile/${favoriteOwner}`);
     });
 });
+
+// router.post("/save-favorite-album/:id", (req, res, next) => {
+//   const favoriteOwner = req.session.user._id;
+//   spotifyApi
+//     .getAlbum(req.params.id)
+//     .then((album) => {
+//       //console.log(album.body);
+//       Album.create({
+//         ...album.body,
+//         id: album.body.id,
+//         favoriteOwner,
+//         totalTracks: album.body.total_tracks,
+//         releaseDate: album.body.release_date,
+//       });
+//     })
+//     .then(() => {
+//       res.redirect(`/auth/profile/${favoriteOwner}`);
+//     });
+// });
 
 router.get("/userlist", (req, res, next) => {
   User.find().then((users) => {
