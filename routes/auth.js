@@ -187,28 +187,11 @@ router.get("/profile/:id", (req, res, next) => {
           let userComments = commentsFromDB.map((singleComment) => {
             singleComment.canDelete = String(singleComment.owner._id) === String(req.session.user._id);
             if(String(singleComment.commentAbout) === String(user._id)) {
-              console.log({singleComment})
+              // console.log({singleComment})
               return singleComment;
             }
           }).filter(comment => comment !== undefined);
-          // const canDelete = userComments.filter((singleComment) => {
-          //   return (
-          //     String(singleComment.commentAbout) ===
-          //     String(req.session.user._id)
-          //   );
-          // });
-
-          
-
-        //   .then(commentsFromDb => {
-        //     const comments = commentsFromDb.map(comment => {
-        //        comment.canUserEdit = comment.owner === req.session.user._id
-        //        return comment
-        //     }
-         
-        //     res.render('/profile', {commentsFromDb})
-        //  })
-
+    
           const data = {
             user,
             isLoggedInUser: String(user._id) === String(req.session.user._id),
