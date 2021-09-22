@@ -188,39 +188,30 @@ router.get("/logout", isLoggedIn, (req, res) => {
 
 router.get("/profile/:id", (req, res, next) => {
   User.findById(req.params.id)
+  .populate("favoriteArtist favoriteAlbum favoriteTrack")
     .then((user) => {
       // console.log({
-      //   user: String(user._id) === String(req.session.user._id)
-      // });
-      Comment.find()
+        //   user: String(user._id) === String(req.session.user._id)
+        // });
+        Comment.find({ commentAbout: req.params.id })
         .populate("owner")
+        .lean()
         .then((commentsFromDB) => {
-          let userComments = commentsFromDB
-            .map((singleComment) => {
-              singleComment.canDelete =
+          // console.log({commentsFromDB})
+          commentsFromDB
+            .forEach((singleComment) =>
+            singleComment.canDelete =
                 String(singleComment.owner._id) ===
-                String(req.session.user._id);
-              if (String(singleComment.commentAbout) === String(user._id)) {
-                // console.log({singleComment})
-                return singleComment;
-              }
-            })
-            .filter((comment) => comment !== undefined);
-
+                String(req.session.user._id)
+            );
+            // console.log({ commentsFromDB })
+            // .filter((comment) => comment !== undefined);
           const data = {
             user,
-            isLoggedInUser: String(user._id) === String(req.session.user._id),
-            userComments,
-            // canDelete: String(req.session.user._id) === userComments.forEach(e => String(e.commentAbout)),
+            userComments: commentsFromDB,
           };
-          // console.log(userComments)
-          //console.log("Can delete:", data.canDelete);
-          // res.render("auth/profile", data);
-          // console.log({
-          //   userComments
-          // });
           res.render("auth/profile", data);
-        });
+        })
     })
     .catch((err) => console.log(err));
 });
@@ -371,11 +362,20 @@ router.post("/save-favorite-artist/:id", (req, res) => {
   const favoriteOwner = req.session.user._id
   spotifyApi.getArtist(req.params.id).then((artist) => {
     console.log(artist.body)
-    Artist.create({
-      ...artist.body,
-      id: artist.body.id,
-      favoriteOwner,
-
+    User.findById(req.session.user._id)
+    .then((user) => {
+      
+    })
+    User.findByIdAndUpdate(req.session.user._id, {
+      $push: favoriteArtist = {
+          ...artist.body,
+          id: artist.body.id,
+          favoriteOwner,
+        }
+      
+      // Room.findByIdAndUpdate(req.params.id, {
+      //   $push: { reviews: reviewFromDB._id },
+      // })
     })
   }).then(() => {
     res.redirect(`/auth/profile/${favoriteOwner}`);
