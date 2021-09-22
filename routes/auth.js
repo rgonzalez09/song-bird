@@ -393,6 +393,7 @@ router.post("/save-favorite-song/:id", (req, res) => {
         ...track.body,
         id: track.body.id,
         previewUrl: track.body.preview_url || "",
+        favoriteOwner,
       });
     })
     .then(() => {
