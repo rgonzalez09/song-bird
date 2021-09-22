@@ -202,6 +202,7 @@ router.get("/profile/:id", (req, res, next) => {
             user,
             userComments: commentsFromDB,
           };
+          console.log(data.user.favoriteArtist);
           res.render("auth/profile", data);
         });
     })
@@ -365,10 +366,10 @@ router.post("/save-favorite-artist/:id", (req, res) => {
               ...artist.body,
               spotifyId: artist.body.id,
             });
-            console.log({ createdArtist });
+            //console.log({ createdArtist });
             artistId = createdArtist._id;
           }
-          console.log({ responseFromDB });
+          //console.log({ responseFromDB });
           const user = await User.findByIdAndUpdate(
             req.session.user._id,
             {
@@ -409,7 +410,7 @@ router.post("/save-favorite-album/:id", (req, res, next) => {
   spotifyApi
     .getAlbum(req.params.id)
     .then((album) => {
-      console.log(album.body);
+      //console.log(album.body);
       Album.create({
         ...album.body,
         id: album.body.id,
