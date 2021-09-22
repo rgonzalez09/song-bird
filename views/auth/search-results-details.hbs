@@ -44,6 +44,9 @@
                 </b>
                 {{results.genres}}
             </h4>
+            <form action="/auth/save-favorite-artist/{{results.id}}" method="POST">
+            <button>Save Favorite Artist</button>
+            </form>
             <h5><b>Popularity:</b> {{results.popularity}}</h5>
 
         </div>
