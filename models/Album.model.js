@@ -1,20 +1,21 @@
 const { Schema, model } = require("mongoose");
 
-const albumSchema = new Schema(
-    {
-        name: String,
-        spotifyId: String,
-        imageUrl: [{ type: String }],
-        artists: [{ type: Schema.Types.ObjectId, ref: "Artist" }],
-        tracks: [{ type: Schema.Types.ObjectId, ref: "Track" }],
-        genres: [ String ],
-        releaseDate: String,
-        availableMarkets: String,
-        popularity: Number,
-        totalTracks: Number,
-        type: String,
-    }
-);
+const albumSchema = new Schema({
+  name: String,
+  spotifyId: String,
+  images: [Object],
+  artists: [Object],
+  tracks: [Object],
+  genres: [String],
+  releaseDate: String,
+  popularity: Number,
+  totalTracks: Number,
+  type: String,
+  favoriteOwner: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
+  },
+});
 
 const Album = model("Album", albumSchema);
 

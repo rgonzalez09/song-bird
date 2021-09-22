@@ -4,8 +4,8 @@ const axios = require("axios");
 const SpotifyWebApi = require("spotify-web-api-node");
 const Comment = require("../models/Recomended.model");
 const Track = require("../models/Track.model");
-// const Album = require("../models/Album.model");
-// const Artist = require("../models/Artist.model");
+const Album = require("../models/Album.model");
+const Artist = require("../models/Artist.model");
 
 // setting the spotify-api goes here:
 const spotifyApi = new SpotifyWebApi({
@@ -187,14 +187,18 @@ router.get("/profile/:id", (req, res, next) => {
       Comment.find()
         .populate("owner")
         .then((commentsFromDB) => {
-          let userComments = commentsFromDB.map((singleComment) => {
-            singleComment.canDelete = String(singleComment.owner._id) === String(req.session.user._id);
-            if(String(singleComment.commentAbout) === String(user._id)) {
-              // console.log({singleComment})
-              return singleComment;
-            }
-          }).filter(comment => comment !== undefined);
-    
+          let userComments = commentsFromDB
+            .map((singleComment) => {
+              singleComment.canDelete =
+                String(singleComment.owner._id) ===
+                String(req.session.user._id);
+              if (String(singleComment.commentAbout) === String(user._id)) {
+                // console.log({singleComment})
+                return singleComment;
+              }
+            })
+            .filter((comment) => comment !== undefined);
+
           const data = {
             user,
             isLoggedInUser: String(user._id) === String(req.session.user._id),
@@ -204,7 +208,7 @@ router.get("/profile/:id", (req, res, next) => {
           // console.log(userComments)
           //console.log("Can delete:", data.canDelete);
           // res.render("auth/profile", data);
-          console.log({userComments});
+          //console.log({ userComments });
           res.render("auth/profile", data);
         });
     })
@@ -214,14 +218,14 @@ router.get("/profile/:id", (req, res, next) => {
 // create for comments post route
 router.post("/create/:id", isLoggedIn, (req, res) => {
   console.log("Creating commment", req.params.id);
-  console.log({owner: req.session.user._id})
+  console.log({ owner: req.session.user._id });
   Comment.create({
     ...req.body,
     // owner: req.session.user._id
     owner: req.session.user._id,
     commentAbout: req.params.id,
   }).then((createdComment) => {
-    console.log({createdComment})
+    console.log({ createdComment });
     //console.log(createdComment.owner);
     // res.redirect(`/auth/profile/${req.params.id}`);
     res.redirect(`back`);
@@ -341,18 +345,40 @@ router.get("/search-results/:searchType/:id", (req, res) => {
 });
 
 router.post("/save-favorite-song/:id", (req, res) => {
-
   const favoriteOwner = req.session.user._id;
-  spotifyApi.getTrack(req.params.id).then((track) => {
-    Track.create({ 
-      ...track.body,
-      id: track.body.id,
-      previewUrl: track.body.preview_url || ''
+  spotifyApi
+    .getTrack(req.params.id)
+    .then((track) => {
+      //console.log(track);
+      Track.create({
+        ...track.body,
+        id: track.body.id,
+        previewUrl: track.body.preview_url || "",
+      });
     })
-  }).then(() => {
-    res.redirect(`/auth/profile/${favoriteOwner}`)
-  })
-})
+    .then(() => {
+      res.redirect(`/auth/profile/${favoriteOwner}`);
+    });
+});
+
+router.post("/save-favorite-album/:id", (req, res, next) => {
+  const favoriteOwner = req.session.user._id;
+  spotifyApi
+    .getAlbum(req.params.id)
+    .then((album) => {
+      console.log(album.body);
+      Album.create({
+        ...album.body,
+        id: album.body.id,
+        favoriteOwner,
+        totalTracks: album.body.total_tracks,
+        releaseDate: album.body.release_date,
+      });
+    })
+    .then(() => {
+      res.redirect(`/auth/profile/${favoriteOwner}`);
+    });
+});
 
 router.get("/userlist", (req, res, next) => {
   User.find().then((users) => {
