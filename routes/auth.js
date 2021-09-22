@@ -3,6 +3,7 @@ const router = require("express").Router();
 const axios = require("axios");
 const SpotifyWebApi = require("spotify-web-api-node");
 const Comment = require("../models/Recomended.model");
+const Artist = require("../models/Artist.model");
 
 // setting the spotify-api goes here:
 const spotifyApi = new SpotifyWebApi({
@@ -30,6 +31,7 @@ const User = require("../models/User.model");
 // Require necessary (isLoggedOut and isLoggedIn) middleware in order to control access to specific routes
 const isLoggedOut = require("../middleware/isLoggedOut");
 const isLoggedIn = require("../middleware/isLoggedIn");
+const Album = require("../models/Album.model");
 
 router.get("/signup", isLoggedOut, (req, res) => {
   res.render("auth/signup");
@@ -37,7 +39,12 @@ router.get("/signup", isLoggedOut, (req, res) => {
 
 router.post("/signup", isLoggedOut, (req, res) => {
   console.log(req.body);
-  const { username, password, firstName, lastName } = req.body;
+  const {
+    username,
+    password,
+    firstName,
+    lastName
+  } = req.body;
 
   if (!username) {
     return res.status(400).render("auth/signup", {
@@ -99,8 +106,7 @@ router.post("/signup", isLoggedOut, (req, res) => {
         }
         if (error.code === 11000) {
           return res.status(400).render("auth/signup", {
-            errorMessage:
-              "Username need to be unique. The username you chose is already in use.",
+            errorMessage: "Username need to be unique. The username you chose is already in use.",
           });
         }
         return res.status(500).render("auth/signup", {
@@ -115,7 +121,10 @@ router.get("/login", isLoggedOut, (req, res) => {
 });
 
 router.post("/login", isLoggedOut, (req, res, next) => {
-  const { username, password } = req.body;
+  const {
+    username,
+    password
+  } = req.body;
 
   if (!username) {
     return res.status(400).render("auth/login", {
@@ -133,8 +142,8 @@ router.post("/login", isLoggedOut, (req, res, next) => {
 
   // Search the database for a user with the username submitted in the form
   User.findOne({
-    username,
-  })
+      username,
+    })
     .then((user) => {
       // If the user isn't found, send the message that user provided wrong credentials
       if (!user) {
@@ -186,12 +195,12 @@ router.get("/profile/:id", (req, res, next) => {
         .then((commentsFromDB) => {
           let userComments = commentsFromDB.map((singleComment) => {
             singleComment.canDelete = String(singleComment.owner._id) === String(req.session.user._id);
-            if(String(singleComment.commentAbout) === String(user._id)) {
+            if (String(singleComment.commentAbout) === String(user._id)) {
               // console.log({singleComment})
               return singleComment;
             }
           }).filter(comment => comment !== undefined);
-    
+
           const data = {
             user,
             isLoggedInUser: String(user._id) === String(req.session.user._id),
@@ -201,7 +210,9 @@ router.get("/profile/:id", (req, res, next) => {
           // console.log(userComments)
           //console.log("Can delete:", data.canDelete);
           // res.render("auth/profile", data);
-          console.log({userComments});
+          // console.log({
+          //   userComments
+          // });
           res.render("auth/profile", data);
         });
     })
@@ -210,15 +221,19 @@ router.get("/profile/:id", (req, res, next) => {
 
 // create for comments post route
 router.post("/create/:id", isLoggedIn, (req, res) => {
-  console.log("Creating commment", req.params.id);
-  console.log({owner: req.session.user._id})
+  // console.log("Creating commment", req.params.id);
+  // console.log({
+  //   owner: req.session.user._id
+  // })
   Comment.create({
     ...req.body,
     // owner: req.session.user._id
     owner: req.session.user._id,
     commentAbout: req.params.id,
   }).then((createdComment) => {
-    console.log({createdComment})
+    // console.log({
+    //   createdComment
+    // })
     //console.log(createdComment.owner);
     // res.redirect(`/auth/profile/${req.params.id}`);
     res.redirect(`back`);
@@ -234,15 +249,21 @@ router.post("/:id/delete", isLoggedIn, (req, res, next) => {
 
 router.get("/:id/edit", (req, res, next) => {
   Comment.findById(req.params.id).then((commentToUpdate) => {
-    console.log(commentToUpdate);
+    // console.log(commentToUpdate);
     res.render("auth/edit", commentToUpdate);
   });
 });
 
 router.post(`/:id/edit`, (req, res, next) => {
-  const { id } = req.params;
-  const { comment } = req.body;
-  Comment.findByIdAndUpdate(id, { comment }).then((commentToUpdate) => {
+  const {
+    id
+  } = req.params;
+  const {
+    comment
+  } = req.body;
+  Comment.findByIdAndUpdate(id, {
+    comment
+  }).then((commentToUpdate) => {
     //console.log(commentToUpdate);
     res.redirect(`/auth/profile/${String(commentToUpdate.commentAbout)}`);
   });
@@ -306,11 +327,11 @@ router.get("/search-results", (req, res) => {
 router.get("/search-results/:searchType/:id", (req, res) => {
   // console.log(req.params.id);
   const search =
-    req.params.searchType === "tracks"
-      ? spotifyApi.getTrack(req.params.id)
-      : req.params.searchType === "albums"
-      ? spotifyApi.getAlbum(req.params.id)
-      : spotifyApi.getArtist(req.params.id);
+    req.params.searchType === "tracks" ?
+    spotifyApi.getTrack(req.params.id) :
+    req.params.searchType === "albums" ?
+    spotifyApi.getAlbum(req.params.id) :
+    spotifyApi.getArtist(req.params.id);
 
   search
     .then((results) => {
@@ -329,13 +350,33 @@ router.get("/search-results/:searchType/:id", (req, res) => {
         artistResults: req.params.searchType === "artists",
       };
 
-      console.log(data.results);
+      // console.log(data.results);
       res.render("auth/search-results-details", data);
       //   }).catch(err => console.log(err))
       // }).catch(err => console.log(err))
     })
     .catch((err) => console.log(err));
 });
+
+
+// =============================FAVORITE ARTIST POST
+
+router.post("/save-favorite-artist/:id", (req, res) => {
+  const favoriteOwner = req.session.user._id
+  spotifyApi.getArtist(req.params.id).then((artist) => {
+    console.log(artist.body)
+    Artist.create({
+      ...artist.body,
+      id: artist.body.id,
+      favoriteOwner,
+
+    })
+  }).then(() => {
+    res.redirect(`/auth/profile/${favoriteOwner}`);
+
+  })
+
+})
 
 router.get("/userlist", (req, res, next) => {
   User.find().then((users) => {
