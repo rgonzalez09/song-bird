@@ -184,31 +184,42 @@ router.get("/profile/:id", (req, res, next) => {
       Comment.find()
         .populate("owner")
         .then((commentsFromDB) => {
-          const userComments = commentsFromDB.filter((singleComment) => {
-            return String(singleComment.commentAbout) === String(user._id);
-          });
-          const canDelete = userComments.filter((singleComment) => {
-            return (
-              String(singleComment.commentAbout) ===
-              String(req.session.user._id)
-            );
-          });
+          let userComments = commentsFromDB.map((singleComment) => {
+            singleComment.canDelete = String(singleComment.owner._id) === String(req.session.user._id);
+            if(String(singleComment.commentAbout) === String(user._id)) {
+              console.log({singleComment})
+              return singleComment;
+            }
+          }).filter(comment => comment !== undefined);
+          // const canDelete = userComments.filter((singleComment) => {
+          //   return (
+          //     String(singleComment.commentAbout) ===
+          //     String(req.session.user._id)
+          //   );
+          // });
+
+          
+
+        //   .then(commentsFromDb => {
+        //     const comments = commentsFromDb.map(comment => {
+        //        comment.canUserEdit = comment.owner === req.session.user._id
+        //        return comment
+        //     }
+         
+        //     res.render('/profile', {commentsFromDb})
+        //  })
 
           const data = {
             user,
             isLoggedInUser: String(user._id) === String(req.session.user._id),
             userComments,
-            canDelete,
             // canDelete: String(req.session.user._id) === userComments.forEach(e => String(e.commentAbout)),
-          };
-
-          const dataContainer = {
-            data,
           };
           // console.log(userComments)
           //console.log("Can delete:", data.canDelete);
           // res.render("auth/profile", data);
-          res.render("auth/profile", dataContainer);
+          console.log({userComments});
+          res.render("auth/profile", data);
         });
     })
     .catch((err) => console.log(err));
@@ -217,12 +228,14 @@ router.get("/profile/:id", (req, res, next) => {
 // create for comments post route
 router.post("/create/:id", isLoggedIn, (req, res) => {
   console.log("Creating commment", req.params.id);
+  console.log({owner: req.session.user._id})
   Comment.create({
     ...req.body,
     // owner: req.session.user._id
-    owner: req.session.user,
+    owner: req.session.user._id,
     commentAbout: req.params.id,
   }).then((createdComment) => {
+    console.log({createdComment})
     //console.log(createdComment.owner);
     // res.redirect(`/auth/profile/${req.params.id}`);
     res.redirect(`back`);
