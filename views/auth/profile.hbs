@@ -1,5 +1,5 @@
 <h2>{{user.username}}'s profile</h2>
-
+<br>
 <h3>My Artists</h3>
 {{#if isLoggedInUser}}
 <form action= "" method="POST">
@@ -20,9 +20,20 @@
     </label>
     <button type="submit">Submit</button>
 </form>
+{{/if}}
 <br>
 <br>
-<a href="/auth/discover-events">Discover Events</a>
+
+<h3>My Favorite Albums</h3>
+{{#if isLoggedInUser}}
+<form action= "" method="POST">
+    <label>
+        <input type="text" placeholder="Add New Favorite Album">
+    </label>
+    <button type="submit">Submit</button>
+</form>
+<br>
+<br>
 <a href="/auth/search">Discover New Music</a>
 {{/if}}
 <br>
