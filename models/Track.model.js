@@ -4,12 +4,16 @@ const trackSchema = new Schema(
     {
         name: String,
         spotifyId: String,
-        artists: [{ type: Schema.Types.ObjectId, ref: "Artist" }],
-        album: Schema.Types.ObjectId, ref: "Album",
+        artists: [Object],
+        album: Object,
         availableMarkets: [ String ],
         previewUrl: String,
         durationMS: Number,
         popularity: Number,
+        favoriteOwner: {
+            type: Schema.Types.ObjectId, 
+            ref: "User"
+        }
     }
 );
 

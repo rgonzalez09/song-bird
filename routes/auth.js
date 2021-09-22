@@ -3,6 +3,8 @@ const router = require("express").Router();
 const axios = require("axios");
 const SpotifyWebApi = require("spotify-web-api-node");
 const Comment = require("../models/Recomended.model");
+const Track = require("../models/Track.model");
+const Album = require("../models/Album.model");
 const Artist = require("../models/Artist.model");
 
 // setting the spotify-api goes here:
@@ -193,13 +195,17 @@ router.get("/profile/:id", (req, res, next) => {
       Comment.find()
         .populate("owner")
         .then((commentsFromDB) => {
-          let userComments = commentsFromDB.map((singleComment) => {
-            singleComment.canDelete = String(singleComment.owner._id) === String(req.session.user._id);
-            if (String(singleComment.commentAbout) === String(user._id)) {
-              // console.log({singleComment})
-              return singleComment;
-            }
-          }).filter(comment => comment !== undefined);
+          let userComments = commentsFromDB
+            .map((singleComment) => {
+              singleComment.canDelete =
+                String(singleComment.owner._id) ===
+                String(req.session.user._id);
+              if (String(singleComment.commentAbout) === String(user._id)) {
+                // console.log({singleComment})
+                return singleComment;
+              }
+            })
+            .filter((comment) => comment !== undefined);
 
           const data = {
             user,
@@ -306,7 +312,7 @@ router.get("/search-results", (req, res) => {
               //   tracks: trackResults.body.tracks.items,
               // }
 
-              console.log("TRACKS:", trackResults.body.tracks.items);
+              // console.log("TRACKS:", trackResults.body.tracks.items);
               // console.log("ARTISTS:", artistResults.body.artists.items)
               // console.log("ALBUMS:", albumResults.body.albums.items)
               res.render("auth/search-results", {
@@ -377,6 +383,41 @@ router.post("/save-favorite-artist/:id", (req, res) => {
   })
 
 })
+router.post("/save-favorite-song/:id", (req, res) => {
+  const favoriteOwner = req.session.user._id;
+  spotifyApi
+    .getTrack(req.params.id)
+    .then((track) => {
+      //console.log(track);
+      Track.create({
+        ...track.body,
+        id: track.body.id,
+        previewUrl: track.body.preview_url || "",
+      });
+    })
+    .then(() => {
+      res.redirect(`/auth/profile/${favoriteOwner}`);
+    });
+});
+
+router.post("/save-favorite-album/:id", (req, res, next) => {
+  const favoriteOwner = req.session.user._id;
+  spotifyApi
+    .getAlbum(req.params.id)
+    .then((album) => {
+      console.log(album.body);
+      Album.create({
+        ...album.body,
+        id: album.body.id,
+        favoriteOwner,
+        totalTracks: album.body.total_tracks,
+        releaseDate: album.body.release_date,
+      });
+    })
+    .then(() => {
+      res.redirect(`/auth/profile/${favoriteOwner}`);
+    });
+});
 
 router.get("/userlist", (req, res, next) => {
   User.find().then((users) => {
