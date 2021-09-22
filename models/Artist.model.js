@@ -9,11 +9,11 @@ const artistSchema = new Schema({
     images: [Object],
     genres: [String],
     popularity: Number,
-    favoriteOwner: {
+    favoriteOwners: [{
         type: Schema.Types.ObjectId,
         ref: "User"
 
-    }
+    }]
 });
 
 const Artist = model("Artist", artistSchema);
