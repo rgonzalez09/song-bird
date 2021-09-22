@@ -403,12 +403,12 @@ router.post("/save-favorite-song/:id", (req, res) => {
           if (responseFromDB) {
             trackId = responseFromDB._id;
           } else {
-            const createdtrack = await Track.create({
+            const createdTrack = await Track.create({
               ...track.body,
               spotifyId: track.body.id,
             });
             // console.log(createdtrack.album.images );
-            trackId = createdtrack._id;
+            trackId = createdTrack._id;
           }
           // console.log({ responseFromDB });
           const user = await User.findByIdAndUpdate(
