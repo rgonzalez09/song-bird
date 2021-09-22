@@ -55,6 +55,11 @@
         <div id="album-details">
             <img src="{{results.images.0.url}}">
             <h4><b>{{results.name}}</b></h4>
+            <form action="/auth/save-favorite-album/{{results.id}}" method="POST">
+                <button>
+                    Save Album to Favorites
+                </button>
+            </form>
             <br>
             <h5>
                 <b>
@@ -63,6 +68,7 @@
                 <a href="/auth/search-results/artists/{{id}}">{{name}},</a> 
                 {{/each}}
                 </b>
+                
             </h5>
             <h5><b>Popularity Score:</b> {{results.popularity}}/100 </h5>
             <h5><b>Label:</b> {{results.label}}</h5>
