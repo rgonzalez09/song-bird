@@ -3,6 +3,9 @@ const router = require("express").Router();
 const axios = require("axios");
 const SpotifyWebApi = require("spotify-web-api-node");
 const Comment = require("../models/Recomended.model");
+const Track = require("../models/Track.model");
+// const Album = require("../models/Album.model");
+// const Artist = require("../models/Artist.model");
 
 // setting the spotify-api goes here:
 const spotifyApi = new SpotifyWebApi({
@@ -285,7 +288,7 @@ router.get("/search-results", (req, res) => {
               //   tracks: trackResults.body.tracks.items,
               // }
 
-              console.log("TRACKS:", trackResults.body.tracks.items);
+              // console.log("TRACKS:", trackResults.body.tracks.items);
               // console.log("ARTISTS:", artistResults.body.artists.items)
               // console.log("ALBUMS:", albumResults.body.albums.items)
               res.render("auth/search-results", {
@@ -329,13 +332,27 @@ router.get("/search-results/:searchType/:id", (req, res) => {
         artistResults: req.params.searchType === "artists",
       };
 
-      console.log(data.results);
+      // console.log(data.results);
       res.render("auth/search-results-details", data);
       //   }).catch(err => console.log(err))
       // }).catch(err => console.log(err))
     })
     .catch((err) => console.log(err));
 });
+
+router.post("/save-favorite-song/:id", (req, res) => {
+
+  const favoriteOwner = req.session.user._id;
+  spotifyApi.getTrack(req.params.id).then((track) => {
+    Track.create({ 
+      ...track.body,
+      id: track.body.id,
+      previewUrl: track.body.preview_url || ''
+    })
+  }).then(() => {
+    res.redirect(`/auth/profile/${favoriteOwner}`)
+  })
+})
 
 router.get("/userlist", (req, res, next) => {
   User.find().then((users) => {
