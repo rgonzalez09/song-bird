@@ -10,6 +10,18 @@ const userSchema = new Schema(
     firstName: String,
     lastName: String,
     password: String,
+    favoriteArtist: [{
+      type: Schema.Types.ObjectId,
+        ref: "Artist"
+    }],
+    favoriteAlbum: [{
+      type: Schema.Types.ObjectId,
+        ref: "Album"
+    }],
+    favoriteTrack: [{
+      type: Schema.Types.ObjectId,
+        ref: "Track"
+    }],
   },
   {
     timestamps: true,
