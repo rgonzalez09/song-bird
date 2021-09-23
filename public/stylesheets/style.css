@@ -116,6 +116,7 @@ button {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  overflow-y: scroll;
 }
 
 .artist {
@@ -145,12 +146,14 @@ button {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  overflow-y: scroll;
 }
 
 .songs {
   height: 100px;
   display: flex;
   justify-content: center;
+  margin-left: px;
 }
 
 .songs img {
@@ -174,6 +177,7 @@ button {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  overflow-y: scroll;
 }
 
 .albums {
@@ -182,6 +186,7 @@ button {
   justify-content: center;
   display: flex;
   width: 100%;
+  margin-left: 50px;
 }
 
 .albums img {
@@ -251,4 +256,5 @@ nav {
   border-radius: 20px;
   background-color: rgba(88, 98, 123, 0.95);
   text-align: center;
+  overflow-x: scroll;
 }
