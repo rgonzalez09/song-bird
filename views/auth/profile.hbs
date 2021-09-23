@@ -16,9 +16,9 @@
                 {{#each user.favoriteArtist}}
                    <br>
                     <img src="{{images.0.url}}"  alt="{{name}}'s picture" width="75" height="75">
-                    <a href="{{name}}"></a>
+                    <a href="/auth/search-results/artists/{{spotifyId}}">{{name}}</a>
                     <br>
-                    {{name}}
+                    
                 {{/each}}
             </div>
                 </div>
@@ -32,7 +32,7 @@
                         <br>
                         <img src="{{album.images.0.url}}" alt="{{name}}'s picture" width="75" height="75">
                         <br>
-                        {{name}}
+                        <a href="/auth/search-results/artists/{{album.artists.0.id}}">{{name}}</a>
                     {{/each}}
                 </div>
     </div>

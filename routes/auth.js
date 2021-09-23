@@ -39,7 +39,7 @@ router.get("/signup", isLoggedOut, (req, res) => {
 });
 
 router.post("/signup", isLoggedOut, (req, res) => {
-  console.log(req.body);
+  //console.log(req.body);
   const { username, password, firstName, lastName } = req.body;
 
   if (!username) {
@@ -392,11 +392,6 @@ router.post("/save-favorite-song/:id", (req, res) => {
   spotifyApi
     .getTrack(req.params.id)
     .then((track) => {
-      //console.log(track.body);
-      // 1 find out wheter the track exists in your track collection
-      // 2a if yes, grab his _id and update users arr with it
-      // 2b if no, vcreate a new track and update userts arr with items
-
       Track.findOne({ spotifyId: track.body.id }).then(
         async (responseFromDB) => {
           let trackId = null;
