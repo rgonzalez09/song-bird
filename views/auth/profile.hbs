@@ -92,6 +92,7 @@
                         </div>
                         <p>{{this.comment}}</p>
                         {{#if this.canDelete}}
+                        <i class="bi bi-chat-left-quote"></i>
                         <form action="/auth/{{_id}}/delete" method="POST">
                             <button class="btn btn-secondary btn-sm" >Delete</button>
                         </form>
