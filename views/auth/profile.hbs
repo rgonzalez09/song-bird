@@ -1,78 +1,107 @@
-<h2>{{user.username}}'s profile</h2>
+
+    <h2>Welcome, {{user.username}}!</h2>
+
 <br>
-<h3>My Artists</h3>
-<div>
-    {{#each user.favoriteArtist}}
+<br>
+
+<div class = 'favoritesBox'>
+
+    <div class = 'container'>
+        <div class="row">
+                <div class="col">
+
+        <div class = 'artistBox'>
+            <h3>My Favorite Artists</h3>
+            <div class = 'artist'>
+                {{#each user.favoriteArtist}}
+                   <br>
+                    <img src="{{images.0.url}}"  alt="{{name}}'s picture" width="75" height="75">
+                    <a href="{{name}}"></a>
+                    <br>
+                    {{name}}
+                {{/each}}
+            </div>
+                </div>
         <br>
-        <img src="{{images.0.url}}" alt="{{name}}'s picture" width="75" height="75">
         <br>
-        {{name}}
-    {{/each}}
+    
+        <div class = 'songBox'>
+            <h3>My Favorite Songs</h3>
+                <div class = 'songs'>
+                    {{#each user.favoriteTrack}}
+                        <br>
+                        <img src="{{album.images.0.url}}" alt="{{name}}'s picture" width="75" height="75">
+                        <br>
+                        {{name}}
+                    {{/each}}
+                </div>
+    </div>
+    
+        <br>
+        <br>
+        <div class = 'albumsBox'>
+    
+            <h3>My Favorite Albums</h3>
+                <div class = 'albums'>
+                    {{#each user.favoriteAlbum}}
+                        <br>
+                        <img src="{{images.0.url}}" alt="{{name}}'s picture" width="75" height="75">
+                        <br>
+                        {{name}}
+                    {{/each}}
+            </div>
+        </div>
+        </div>
+        </div>
+                </div>
+    
 </div>
 <br>
 <br>
 
-<h3>My Favorite Songs</h3>
-    {{#each user.favoriteTrack}}
-        <br>
-        <img src="{{album.images.0.url}}" alt="{{name}}'s picture" width="75" height="75"> 
-        <br>
-        {{name}}
-    {{/each}}
-
-<br>
-<br>
-
-<h3>My Favorite Albums</h3>
-    {{#each user.favoriteAlbum}}
-        <br>
-        <img src="{{images.0.url}}" alt="{{name}}'s picture" width="75" height="75">
-        <br>
-        {{name}}
-        
-    {{/each}}
-
-<br>
-<br>
-
-<a href="/auth/search">Discover New Music</a>
-
-<br>
-<br>
-
-</form>
-<br>
-<br>
-<h3>Comments</h3>
-<form action="/auth/create/{{user._id}}" method="post">
-    <br>
-    <textarea name="comment" rows="4" cols="30"></textarea>
-    <br>
-    <button type ='submit'>Submit Comment</button>
-</form>
-<br>
-{{!-- {{#if user equals ownerOfComment then show comments}} --}}
-
-
-    <div id="comment">
-        {{#each userComments}}
-            <div class="comment-box">
-                <div>
-                    <h3>{{owner.username}}</h3>
-                    {{!-- Create new variable that will check to see if loggedinuser equals commentOwner --}}
-                    
-                    
-                </div>
-                <p>{{this.comment}}</p>
-                {{#if this.canDelete}}
-                <form action="/auth/{{_id}}/delete" method="POST">
-                    <button>Delete</button>
-                </form>
-                <form action="/auth/{{_id}}/edit" method="GET">
-                    <button>Edit</button>
-                </form>
-                {{/if}}
-            </div>
-        {{/each}}
+<div class ='container'>
+    <a href="/auth/search" class="btn btn-primary btn-lg" role="button">Discover New Music</a>
     </div>
+
+<br>
+<br>
+
+</form>
+<br>
+<br>
+<div class = 'commentBox'>
+    
+    <h3>Comments</h3>
+    <form action="/auth/create/{{user._id}}" method="post">
+        <br>
+        <textarea name="comment" rows="4" cols="30"></textarea>
+        <br>
+        <button type ='submit' class="btn btn-lg btn-primary">Submit Comment</button>
+    </form>
+    <br>
+    {{!-- {{#if user equals ownerOfComment then show comments}} --}}
+    
+    
+        <div>
+            <div id="comment">
+                {{#each userComments}}
+                    <div class="comment-box">
+                        <div>
+                            <h3>{{owner.username}}</h3>
+                            {{!-- Create new variable that will check to see if loggedinuser equals commentOwner --}}
+                        </div>
+                        <p>{{this.comment}}</p>
+                        {{#if this.canDelete}}
+                        <form action="/auth/{{_id}}/delete" method="POST">
+                            <button class="btn btn-secondary btn-sm" >Delete</button>
+                        </form>
+                        <form action="/auth/{{_id}}/edit" method="GET">
+                            <button class="btn btn-primary btn-sm">Edit</button>
+                        </form>
+                        {{/if}}
+                    </div>
+                {{/each}}
+            </div>
+                </div>
+        </div>
 </div>
