@@ -3,6 +3,13 @@
   padding: 0px;
   box-sizing: border-box;
 }
+.login {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: 400px;
+  background-size: 400vw 400vh;
+}
 .landing {
   display: flex;
   flex-direction: column;
@@ -83,6 +90,7 @@ h2 {
   justify-content: space-between;
   height: 400px;
   width: 400px;
+  border-radius: 10px;
 }
 
 button {
