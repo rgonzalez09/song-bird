@@ -8,13 +8,20 @@
       <title>Song Bird - Discover your favorite music</title>
       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
       <link rel="stylesheet" href="/stylesheets/style.css">
+      <link
+            href="https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap"
+      rel="stylesheet"
+    />
    </head>
 
    <body>
-      <div class="nav-container">
+
          <nav>
-            <ul>
-               <img src="/images/Song_Bird_Logo.png" width="50" height="50" alt="Logo">
+               <img src="/images/Song_Bird_Logo.png" width="90" height="80" alt="Logo">
+         <div class = 'logo'>
+            <h4>Song Bird</h4>
+         </div>
+            <ul class = 'nav-links'>
                <li class = "nav-header" id="home-li"><a href="/">Home</a></li>
                {{#if currentUser}}
                <li class = "nav-header" id="profile-li"><a href="/auth/profile/{{currentUser._id}}">Profile</a></li>
@@ -26,7 +33,6 @@
                {{/if}}
             </ul>
          </nav>
-      </div>
       <br>
       <br>
       <br>
