@@ -506,12 +506,13 @@ router.post("/save-favorite-album/:id", (req, res) => {
 // });
 
 router.get("/userlist", (req, res, next) => {
-  User.find().then((users) => {
-    //console.log(users[0]);
-    res.render("auth/userlist", {
-      users,
+  User.find()
+    .sort({ firstName: 1 })
+    .then((users) => {
+      res.render("auth/userlist", {
+        users,
+      });
     });
-  });
 });
 
 module.exports = router;
