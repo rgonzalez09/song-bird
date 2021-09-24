@@ -14,7 +14,17 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   margin-left: 350px;
+  margin-right: 350px;
+}
+
+.indexSnippet {
+  margin-left: 200px;
+  margin-right: 200px;
+  margin-bottom: 100px;
+  background-color: white;
+  border-radius: 10px;
 }
 
 .logo {
@@ -104,6 +114,13 @@ button {
   display: flex;
   flex-direction: column;
   justify-content: center;
+}
+
+#artist-details {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: -50px;
 }
 
 .artistBox {
@@ -199,6 +216,20 @@ button {
   margin-left: 120px;
 }
 
+#album-details {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: -50px;
+}
+
+#track-details {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: -50px;
+}
+
 a {
   color: #00b7ff;
 }
@@ -261,4 +292,18 @@ nav {
 
 .comment {
   overflow-y: scroll;
+}
+
+#footnote {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  background-color: rgba(0, 0, 0, 0.308);
+  height: 35px;
+  color: rgb(201, 243, 245);
+}
+
+#footnote a img {
+  display: flex;
+  align-self: flex-end;
 }
