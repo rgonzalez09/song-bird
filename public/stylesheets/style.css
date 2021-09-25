@@ -344,6 +344,7 @@ button {
   border-radius: 10px;
   margin-right: 150px;
   margin-left: 150px;
+  padding-top: 78px;
 }
 
 #track-details {
@@ -414,10 +415,23 @@ nav {
   border-radius: 20px;
   background-color: rgba(88, 98, 123, 0.95);
   text-align: center;
+  align-items: center;
+}
+
+.commentBox div h3 {
+  margin-left: 4vw;
 }
 
 .comment {
-  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  margin-left: 22vw;
+  align-self: center;
+  background-color: rgb(201, 201, 201);
+  border-radius: 10px;
+  width: 200px;
 }
 
 #footnote {
