@@ -274,6 +274,7 @@ router.get("/search-results", (req, res) => {
     .searchTracks(req.query.search, {
       limit: 10,
     })
+
     .then((trackResults) => {
       spotifyApi
         .searchArtists(req.query.search, {
@@ -292,9 +293,9 @@ router.get("/search-results", (req, res) => {
               //   tracks: trackResults.body.tracks.items,
               // }
 
-              // console.log("TRACKS:", trackResults.body.tracks.items);
-              // console.log("ARTISTS:", artistResults.body.artists.items)
-              // console.log("ALBUMS:", albumResults.body.albums.items)
+              console.log("TRACKS:", trackResults.body.tracks.items);
+              //console.log("ARTISTS:", artistResults.body.artists.items);
+              //console.log("ALBUMS:", albumResults.body.albums.items);
               res.render("auth/search-results", {
                 tracksData: trackResults.body.tracks.items,
                 artistsData: artistResults.body.artists.items,
