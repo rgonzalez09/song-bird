@@ -233,6 +233,12 @@ button {
   margin-left: 50px;
 }
 
+.artist a {
+  font-size: 10pt;
+  padding-left: 10px;
+  padding-right: -50px;
+}
+
 .songBox {
   width: 600px;
   height: 250px;
@@ -252,6 +258,12 @@ button {
   display: flex;
   justify-content: center;
   margin-left: 80px;
+}
+
+.songs a {
+  font-size: 10pt;
+  padding-left: 10px;
+  padding-right: -50px;
 }
 
 .songs img {
@@ -287,6 +299,12 @@ button {
   margin-left: 50px;
 }
 
+.albums a {
+  font-size: 10pt;
+  padding-left: 10px;
+  padding-right: -50px;
+}
+
 .albums img {
   border-radius: 5px;
   width: 100px;
@@ -301,6 +319,27 @@ button {
   flex-direction: column;
   align-items: center;
   margin-top: -50px;
+}
+
+.search-details {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(201, 201, 201);
+  border-radius: 10px;
+  max-width: 510px;
+  padding-right: 50px;
+  padding-left: 50px;
+  text-align: center;
+}
+
+#album-details div h5 {
+  text-align: center;
+  background-color: rgb(201, 201, 201);
+  border-radius: 10px;
+  margin-right: 150px;
+  margin-left: 150px;
 }
 
 #track-details {

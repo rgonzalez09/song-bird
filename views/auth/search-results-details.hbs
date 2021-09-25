@@ -2,6 +2,8 @@
     {{!-- {{#each tracksData}} --}}
         <div id="track-details">
             <img src="{{results.album.images.0.url}}" width="400" height="400">
+            <br>
+            <div class= "search-details">
             <h4>
                 <b>
                 {{results.name}}
@@ -24,6 +26,8 @@
                 <source src={{results.preview_url}} type="audio/mpeg">
                 Your browser does not support the audio element.
             </audio>
+            <br>
+            </div>
         </div>
     {{!-- {{/each}} --}}
     {{/if}}
@@ -32,6 +36,8 @@
     {{!-- {{#each artistsData}} --}}
         <div id="artist-details">
             <img src="{{results.images.0.url}}" width="400" height="400">
+            <br>
+            <div class= "search-details">
             <h4>
                 <b>
                     <a href="/auth/search-results?search={{results.name}}">{{results.name}}</a> 
@@ -48,6 +54,7 @@
             <button>Save Favorite Artist</button>
             </form>
             <h5><b>Popularity:</b> {{results.popularity}}/100</h5>
+            </div>
 
         </div>
     {{!-- {{/each}} --}}
@@ -57,6 +64,8 @@
     {{!-- {{#each albumsData}} --}}
         <div id="album-details">
             <img src="{{results.images.0.url}}" width="400" height="400">
+            <br>
+            <div class= "search-details">
             <h4><b>{{results.name}}</b></h4>
             <form action="/auth/save-favorite-album/{{results.id}}" method="POST">
                 <button>
@@ -76,6 +85,7 @@
             <h5><b>Popularity Score:</b> {{results.popularity}}/100 </h5>
             <h5><b>Label:</b> {{results.label}}</h5>
             <h5><b>Release:</b> {{results.release_date}}</h5>
+            </div>
             <br>
             <div><h5><b>Track List:</b></h5>
             <ul class="track-list">  
