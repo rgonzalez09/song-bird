@@ -163,8 +163,12 @@ h2 {
 
 #results h5 {
   margin-right: 150px;
+
   background-color: rgb(201, 201, 201);
   border-radius: 10px;
+  position: sticky;
+  width: 400px;
+  top: 0;
 }
 
 #results img {
@@ -437,7 +441,7 @@ nav {
 
 .user-list {
   text-align: center;
-  background-color: rgb(201, 201, 201);
+  background-color: rgba(201, 201, 201, 0.788);
   border-radius: 10px;
   margin-right: 600px;
   margin-left: 600px;
