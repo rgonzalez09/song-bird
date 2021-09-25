@@ -1,5 +1,6 @@
 <br>
 <br>
+<div class="signup">
 <form action="/auth/signup" method="POST">
    <label>
       <input type="text" name="username" placeholder="Username">
@@ -17,8 +18,9 @@
       <input type="password" name="password" placeholder="Password">
    </label>
 <br>
-   <button type="submit">Submit</button>
+   <button class="btn btn-primary" type="submit">Submit</button>
 </form>
 <br>
 <a href="/auth/login">Already a user? Click here to sign in</a>
 {{errorMessage}}
+</div>

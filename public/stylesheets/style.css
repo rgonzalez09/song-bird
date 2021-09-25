@@ -2,14 +2,43 @@
   margin: 0px;
   padding: 0px;
   box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
 }
 .login {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin-left: 400px;
+  margin-left: 850px;
+  margin-right: 850px;
+  padding-bottom: 10px;
   background-size: 400vw 400vh;
+  align-items: center;
+  background-color: rgb(201, 201, 201);
+  border-radius: 10px;
 }
+
+.login form button {
+  margin-left: 50px;
+}
+
+.signup {
+  display: flex;
+  flex-direction: column;
+  margin-left: 700px;
+  margin-right: 700px;
+  padding-top: 20px;
+  background-color: rgb(201, 201, 201);
+  border-radius: 10px;
+  align-self: center;
+}
+
+.signup form {
+  padding-left: 150px;
+}
+.signup form button {
+  margin-left: 50px;
+}
+
 .landing {
   display: flex;
   flex-direction: column;
@@ -96,10 +125,46 @@ h2 {
   min-height: 8vh;
 }
 
+.profile {
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+}
+.profileButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(201, 201, 201);
+  border-radius: 10px;
+  align-content: center;
+  align-items: center;
+  max-width: 650px;
+}
+
+.container button {
+  margin-left: 64px;
+  margin-bottom: 10px;
+}
+
 #results {
   display: flex;
   justify-content: space-between;
   justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin-left: 150px;
+}
+
+#results h5 {
+  margin-right: 150px;
+  background-color: rgb(201, 201, 201);
+  border-radius: 10px;
 }
 
 #results img {
@@ -109,6 +174,14 @@ h2 {
   width: 400px;
   border-radius: 10px;
   margin-right: 150px;
+}
+
+#results a {
+  margin-right: 150px;
+}
+
+#results p {
+  max-width: 400px;
 }
 
 button {
@@ -270,11 +343,13 @@ nav {
   text-transform: uppercase;
   letter-spacing: 5px;
   font-size: 20px;
+  padding-top: 10px;
 }
 .nav-links {
   display: flex;
   justify-content: space-around;
   width: 40%;
+  margin-bottom: -10px;
 }
 .nav-links li {
   list-style: none;
@@ -286,6 +361,7 @@ nav {
   letter-spacing: 3px;
   font-weight: bold;
   font-size: 14px;
+  max-height: 90px;
 }
 
 .commentBox {
@@ -318,4 +394,12 @@ nav {
 #footnote a img {
   display: flex;
   align-self: flex-end;
+}
+
+.user-list {
+  text-align: center;
+  background-color: rgb(201, 201, 201);
+  border-radius: 10px;
+  margin-right: 600px;
+  margin-left: 600px;
 }
